@@ -3,12 +3,12 @@ from flask import Flask, jsonify
 import os
 from src.constants.http_status_codes import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from src.controllers.auth import auth
-# from src.models.customers import customers
-# from src.models.expenses import expenses
-# from src.models.incomes import incomes
-# from src.models.producers import producers
-# from src.models.projects import projects
-# from src.models.tasks import tasks
+from src.controllers.customer import customer
+from src.controllers.producer import producer
+from src.controllers.project import project
+from src.controllers.task import task
+from src.controllers.user_role import user_role
+from src.controllers.user import user
 from src.database import db
 from flask_jwt_extended import JWTManager
 # from flasgger import Swagger, swag_from
@@ -30,19 +30,19 @@ app.config.from_mapping(
 
 for view in views:
     app.register_blueprint(view)
-    
+
 db.app = app
 db.init_app(app)
 
 JWTManager(app)
 # Swagger(app, config=swagger_config, template=template)
 app.register_blueprint(auth)
-# app.register_blueprint(customers)
-# app.register_blueprint(expenses)
-# app.register_blueprint(incomes)
-# app.register_blueprint(producers)
-# app.register_blueprint(projects)
-# app.register_blueprint(tasks)
+app.register_blueprint(customer)
+app.register_blueprint(producer)
+app.register_blueprint(project)
+app.register_blueprint(task)
+app.register_blueprint(user_role)
+app.register_blueprint(user)
 
 @app.errorhandler(HTTP_404_NOT_FOUND)
 def handle_404(e):

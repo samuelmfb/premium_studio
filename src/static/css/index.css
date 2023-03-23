@@ -1,18 +1,32 @@
 :root { 
     --bg-color: #43627f;
     --bg-light-color: #7b99b6;
+    --azul-escuro: #001021;
+    --azul-medio : #00264F;
+    --azul-claro : #00346B;
 }
+
+.bg-dark-blue {
+    background-color: var(--azul-escuro) !important;
+}
+
 .bg-blue {
-    background-color: var(--bg-color) !important;
+    background-color: var(--azul-medio) !important;
 }
 
 .bg-light-blue {
-    background-color: var(--bg-light-color) !important;
+    background-color: var(--azul-claro) !important;
 }
 .btn-home {
     height: 180px !important;
     width: 180px !important;
+    color: white !important;
 }
+.invert {
+    filter :invert(1);
+}
+
+
 .btn-login {
     height: 45px;
 }
@@ -20,7 +34,7 @@
 .btn-login{
 font-weight: 0;
 font-size: 14px;
-color: #fff;
+color: #fff !important;
 background-color: #0066CC;
 padding: 10px 10px;
 border: 2px solid #0066cc;

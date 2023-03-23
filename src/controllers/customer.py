@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify
 import validators
 from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
 from src.database import db
-from models.customer import Customer
+from src.models.customer import Customer
 from flask_jwt_extended import get_jwt_identity, jwt_required
 customer = Blueprint("customer",__name__,url_prefix="/api/v1/customer")
 
@@ -11,6 +11,7 @@ customer = Blueprint("customer",__name__,url_prefix="/api/v1/customer")
 @jwt_required()
 def handle_customer():
     current_user = get_jwt_identity()
+    
     if request.method == "POST":
         name = request.get_json().get("name", "")
         email = request.get_json().get("email", "")
@@ -26,40 +27,41 @@ def handle_customer():
                 "error": "Customer already exists."
             }), HTTP_409_CONFLICT
 
-        Customer = Customer(
+        customer = Customer(
             name = name, 
             phone_num = phone_num,
             email = email
         )
 
-        db.session.add(Customer)
+        db.session.add(customer)
         db.session.commit()
 
         return jsonify({
-            "id": Customer.id,
-            "name": Customer.name
+            "id_customer": customer.id_customer,
+            "name": customer.name
         }), HTTP_201_CREATED
     
     else:
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 5, type=int)
-        customer = Customer.query.paginate(page=page, per_page=per_page)
+        customers = Customer.query.paginate(page=page, per_page=per_page)
         
         data = []
-        for Customer in customer.items:
+        for customer in customers.items:
             data.append({
-                "name": Customer.name,
-                "email": Customer.email,
-                "phone_num": Customer.phone_num
+                "id_customer": customer.id_customer,
+                "name": customer.name,
+                "email": customer.email,
+                "phone_num": customer.phone_num
             })
         meta = {
-            "page": customer.page,
-            "pages": customer.pages,
-            "total": customer.total,
-            "prev_page": customer.prev_num,
-            "next_page": customer.next_num,
-            "has_next": customer.has_next,
-            "has_prev": customer.has_prev
+            "page": customers.page,
+            "pages": customers.pages,
+            "total": customers.total,
+            "prev_page": customers.prev_num,
+            "next_page": customers.next_num,
+            "has_next": customers.has_next,
+            "has_prev": customers.has_prev
         }
         return jsonify ({
             "data": data,
@@ -68,8 +70,8 @@ def handle_customer():
         
 @customer.get("/<int:id>")
 @jwt_required()
-def get_Customer(id):
-    customer = Customer.query.filter_by(id=id).first()
+def get_Customer(id_customer):
+    customer = Customer.query.filter_by(id_customer=id_customer).first()
     if not customer:
         return jsonify({
             "message": "Item not found."
@@ -84,8 +86,9 @@ def get_Customer(id):
 @customer.patch("/<int:id>")
 @jwt_required()
 def edit_customer(id):
-    customer = Customer.query.filter_by(id=id).first()
-    if not Customer:
+    customer = Customer.query.filter_by(id_customer=id).first()
+
+    if not customer:
         return jsonify({
             "message": "Item not found."
         })
@@ -105,14 +108,14 @@ def edit_customer(id):
     db.session.commit()
 
     return jsonify({
-        "id": customer.id,
+        "id_customer": customer.id_customer,
         "name": customer.name
     }), HTTP_201_CREATED
 
 @customer.delete("/<int:id>")
 @jwt_required()
 def delete_customer(id):
-    customer = Customer.query.filter_by(id=id).first()
+    customer = Customer.query.filter_by(id_customer=id).first()
     if not Customer:
         return jsonify({
             "message": "Item not found."

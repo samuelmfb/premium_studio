@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify
 import validators
 from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
 from src.database import db
-from models.producer import Producer
+from src.models.producer import Producer
 from flask_jwt_extended import get_jwt_identity, jwt_required
 producer = Blueprint("producer",__name__,url_prefix="/api/v1/producer")
 
@@ -29,30 +29,30 @@ def handle_producer():
         db.session.commit()
 
         return jsonify({
-            "id": producer.id,
+            "id": producer.id_producer,
             "name": producer.name
         }), HTTP_201_CREATED
     
     else:
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 5, type=int)
-        producer = Producer.query.paginate(page=page, per_page=per_page)
+        producers = Producer.query.paginate(page=page, per_page=per_page)
         
         data = []
-        for producer in producer.items:
+        for producer in producers.items:
             data.append({
-                "id": producer.id,
+                "id": producer.id_producer,
                 "name": producer.name,
                 "area": producer.area
             })
         meta = {
-            "page": producer.page,
-            "pages": producer.pages,
-            "total": producer.total,
-            "prev_page": producer.prev_num,
-            "next_page": producer.next_num,
-            "has_next": producer.has_next,
-            "has_prev": producer.has_prev
+            "page": producers.page,
+            "pages": producers.pages,
+            "total": producers.total,
+            "prev_page": producers.prev_num,
+            "next_page": producers.next_num,
+            "has_next": producers.has_next,
+            "has_prev": producers.has_prev
         }
         return jsonify ({
             "data": data,
@@ -62,13 +62,13 @@ def handle_producer():
 @producer.get("/<int:id>")
 @jwt_required()
 def get_producer(id):
-    producer = Producer.query.filter_by(id=id).first()
+    producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
             "message": "Item not found."
         })
     return jsonify({
-        "id": producer.id,
+        "id": producer.id_producer,
         "name": producer.name,
         "area": producer.area
     }), HTTP_200_OK
@@ -77,7 +77,7 @@ def get_producer(id):
 @producer.patch("/<int:id>")
 @jwt_required()
 def edit_producer(id):
-    producer = Producer.query.filter_by(id=id).first()
+    producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
             "message": "Item not found."
@@ -92,14 +92,14 @@ def edit_producer(id):
     db.session.commit()
 
     return jsonify({
-        "id": producer.id,
+        "id_producer": producer.id_producer,
         "name": producer.name
     }), HTTP_201_CREATED
 
 @producer.delete("/<int:id>")
 @jwt_required()
 def delete_producer(id):
-    producer = Producer.query.filter_by(id=id).first()
+    producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
             "message": "Item not found."

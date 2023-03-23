@@ -6,8 +6,10 @@ from src.models.producer import Producer
 
 class Task(db.Model):
     id_task = db.Column(db.Integer, primary_key = True)
-    project_id = db.Column(db.Integer, db.ForeignKey(Project.id_project))
-    producer_id = db.Column(db.Integer, db.ForeignKey(Producer.id_producer))
+    id_project = db.Column(db.Integer, db.ForeignKey(Project.id_project))
+    project = db.relationship('Project', backref='project_task', foreign_keys=[id_project])
+    id_producer = db.Column(db.Integer, db.ForeignKey(Producer.id_producer))
+    producer = db.relationship('Producer', backref='producer_task', foreign_keys=[id_producer])
     description = db.Column(db.String(250), nullable = False)
     deadline = db.Column(db.Date, nullable = False)
     started = db.Column(db.DateTime, default=datetime.now())

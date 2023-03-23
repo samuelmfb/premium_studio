@@ -13,7 +13,7 @@ auth = Blueprint("auth",__name__,url_prefix="/api/v1/auth")
 @auth.post("/register")
 @swag_from('./docs/auth/register.yaml')
 def register():
-    username = request.json["username"]
+    user_name = request.json["user_name"]
     email = request.json["email"]
     password = request.json["password"]
 
@@ -21,12 +21,12 @@ def register():
     if len(password) < 6:
         return jsonify({'error': 'Password is too short.'}), HTTP_400_BAD_REQUEST
     
-    #validates username length
-    if len(username) < 6:
+    #validates user_name length
+    if len(user_name) < 6:
         return jsonify({'error': 'User name is too short.'}), HTTP_400_BAD_REQUEST
     
-    #validates username
-    if not username.isalnum() or " " in username:
+    #validates user_name
+    if not user_name.isalnum() or " " in user_name:
         return jsonify({'error': 'User name must be alphanumeric, with no spaces.'}), HTTP_400_BAD_REQUEST
 
     #validates email
@@ -37,13 +37,13 @@ def register():
     if User.query.filter_by(email = email).first() is not None:
         return jsonify({'error': 'Email is already in use.'}), HTTP_409_CONFLICT
     
-    #checks if username is unique
-    if User.query.filter_by(username = username).first() is not None:
+    #checks if user_name is unique
+    if User.query.filter_by(user_name = user_name).first() is not None:
         return jsonify({'error': 'Email is already in use.'}), HTTP_409_CONFLICT
     
     pwd_hash = generate_password_hash(password)
     user = User(
-        username = username,
+        user_name = user_name,
         password = pwd_hash,
         email = email
     )
@@ -55,7 +55,7 @@ def register():
     return jsonify({
         "message": "User created.",
         "user": {
-            "username": username, "email": email
+            "user_name": user_name, "email": email
         }
     }), HTTP_201_CREATED
 
@@ -69,14 +69,14 @@ def login():
     if user:
         is_pass_correct = check_password_hash(user.password, password)
         if is_pass_correct:
-            refresh = create_refresh_token(identity = user.id)
-            access = create_access_token(identity = user.id)
+            refresh = create_refresh_token(identity = user.id_user)
+            access = create_access_token(identity = user.id_user)
 
             return jsonify({
                 "user": {
                     "refresh": refresh, 
                     "access": access,
-                    "username": user.username,
+                    "user_name": user.user_name,
                     "email": user.email
                 }
             })
@@ -86,11 +86,11 @@ def login():
 @auth.get("/me")
 @jwt_required()
 def me():
-    user_id = get_jwt_identity()
-    user = User.query.filter_by(id = user_id).first()
+    id_user = get_jwt_identity()
+    user = User.query.filter_by(id_user = id_user).first()
 
     return jsonify({
-        "user": user.username,
+        "user": user.user_name,
         "email": user.email
     }), HTTP_200_OK
 
