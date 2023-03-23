@@ -5,8 +5,14 @@
     --azul-medio : #00264F;
     --azul-claro : #00346B;
 }
+@font-face {
+    font-family: Baloo;
+    src: url("/static/fonts/BalooPaaji2-Regular.ttf");
+}
+
 body { 
     color: white !important; 
+    font-family: Baloo;
 }
 a {
     color: white !important;

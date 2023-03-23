@@ -12,6 +12,10 @@ def index_page():
 def login_page():
     return render_template('login.html')
 
+@index_views.route('/gestao', methods=['GET'])
+def management_page():
+    return render_template('gestao.html')
+
 @index_views.route('/init', methods=['GET'])
 def init():
     db.drop_all()
