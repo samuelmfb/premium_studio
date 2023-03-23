@@ -5,7 +5,13 @@
     --azul-medio : #00264F;
     --azul-claro : #00346B;
 }
-
+body { 
+    color: white !important; 
+}
+a {
+    color: white !important;
+    text-decoration: none !important;
+}
 .bg-dark-blue {
     background-color: var(--azul-escuro) !important;
 }
@@ -21,6 +27,14 @@
     height: 180px !important;
     width: 180px !important;
     color: white !important;
+    background-color: var(--azul-claro) !important;
+}
+
+.btn-basic {
+    color: white !important;
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+    background-color: var(--azul-claro) !important;
 }
 .invert {
     filter :invert(1);
