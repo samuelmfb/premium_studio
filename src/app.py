@@ -13,7 +13,7 @@ from src.database import db
 from flask_jwt_extended import JWTManager
 # from flasgger import Swagger, swag_from
 # from src.config.swagger import template, swagger_config
-
+from src.views import views
 app = Flask(__name__,
     instance_relative_config = True)
 
@@ -28,6 +28,9 @@ app.config.from_mapping(
     }
 )
 
+for view in views:
+    app.register_blueprint(view)
+    
 db.app = app
 db.init_app(app)
 
