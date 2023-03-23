@@ -4,17 +4,10 @@ from src.database import db
 
 customer_views = Blueprint('customer_views', __name__, template_folder='../templates')
 
-@customer_views.route('/customers', methods=['GET'])
+@customer_views.route('/clientes', methods=['GET'])
 def index_page():
     return render_template('customers.html')
 
-@customer_views.route('/init', methods=['GET'])
-def init():
-    db.drop_all()
-    db.create_all()
-    #handle_user('bob', 'bobpass')
-    return jsonify(message='db initialized!')
-
-@customer_views.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({'status':'healthy'})
+@customer_views.route('/adicionar_cliente', methods=['GET'])
+def create_customer_page():
+    return render_template('create_customer.html')

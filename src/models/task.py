@@ -10,6 +10,7 @@ class Task(db.Model):
     project = db.relationship('Project', backref='project_task', foreign_keys=[id_project])
     id_producer = db.Column(db.Integer, db.ForeignKey(Producer.id_producer))
     producer = db.relationship('Producer', backref='producer_task', foreign_keys=[id_producer])
+    title = db.Column(db.String(250), nullable = False)
     description = db.Column(db.String(250), nullable = False)
     deadline = db.Column(db.Date, nullable = False)
     started = db.Column(db.DateTime, default=datetime.now())

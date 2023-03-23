@@ -15,6 +15,7 @@ def handle_task():
     if request.method == "POST":
         id_producer = request.get_json().get("id_producer", "")
         id_project = request.get_json().get("id_project", "")
+        title = request.get_json().get("title", "")
         description = request.get_json().get("description", "")
         deadline = request.get_json().get("deadline", "")
         if deadline:
@@ -32,6 +33,7 @@ def handle_task():
             id_project = id_project,
             description = description,
             deadline = deadline,
+            title = title
         )
 
         db.session.add(task)
@@ -39,6 +41,7 @@ def handle_task():
 
         return jsonify({
             "id_task": task.id_task,
+            "title": task.title,
             "description": task.description
         }), HTTP_201_CREATED
     
@@ -56,6 +59,7 @@ def handle_task():
                 "deadline": task.deadline,
                 "started": task.started,
                 "finished": task.finished,
+                "title": task.title,
                 "description": task.description
             })
         meta = {
@@ -98,6 +102,7 @@ def edit_task(id):
     id_producer = request.get_json().get("id_producer", "")
     id_project = request.get_json().get("id_project", "")
     description = request.get_json().get("description", "")
+    title = request.get_json().get("title", "")
     deadline = request.get_json().get("deadline", "")
     
     finished = request.get_json().get("finished", "")
@@ -116,6 +121,8 @@ def edit_task(id):
         task.deadline = deadline
     if finished:
         task.finished = finished
+    if title:
+        task.title = title
 
     db.session.commit()
 

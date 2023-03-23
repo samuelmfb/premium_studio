@@ -16,37 +16,32 @@
     <!-- jumbotron -->
     <div class="mb-4 bg-blue d-flex align-middle mt-5">
         <div class="container-fluid py-5 d-flex justify-content-center">
-            <img class="invert" src="/static/img/premium_logo.png" alt="Premium Logo" >
+            <h2>Nova Tarefa</h2>
         </div>
     </div>
-    
-    <!-- formulário do login -->
     <div class="container-md d-flex justify-content-center" >
         <form>
-            <!-- Email -->
+            <!-- Nome -->
             <div class="form-outline mb-4" style="width:350px">
-                <label class="form-label" for="login_email">Email:</label>
-                <input type="email" id="login_email" class="form-control" />
+                <label class="form-label" for="title">Título:</label>
+                <input type="text" id="title" class="form-control" />
             </div>
-          
-            <!-- Password -->
-            <div class="form-outline mb-4">
-                <label class="form-label" for="login_senha">Senha:</label>
-                <input type="password" id="login_senha" class="form-control" />
+            <!-- Telefone -->
+            <div class="form-outline mb-4" style="width:350px">
+                <label class="form-label" for="deadline">Prazo Limite:</label>
+                <input type="text" id="deadline" class="form-control" />
             </div>
-          
-            <!-- Entrar -->
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-basic mb-4">Entrar</button>
+            <div class="form-group mb-3">
+                <label for="description">Descrição:</label>
+                <textarea class="form-control" id="description" rows="5"></textarea>
+              </div>
+            <!-- Salvar -->
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-basic mb-4"><i class="fa-regular fa-floppy-disk"></i> Salvar</button>
             </div>
-          
-            <!-- Cadastrar novo usuário -->
-            <div class="text-center">
-              <p><a href="#!">Cadastrar novo usuário</a></p>
-            </div>
+        
           </form>
     </div>
-    
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </html>

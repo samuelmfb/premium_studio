@@ -16,6 +16,10 @@ def login_page():
 def management_page():
     return render_template('gestao.html')
 
+@index_views.route('/acessos', methods=['GET'])
+def permissions_page():
+    return render_template('acessos.html')
+
 @index_views.route('/init', methods=['GET'])
 def init():
     db.drop_all()
