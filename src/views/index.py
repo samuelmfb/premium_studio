@@ -12,6 +12,10 @@ def index_page():
 def login_page():
     return render_template('login.html')
 
+@index_views.route('/novo_usuario', methods=['GET'])
+def new_user_page():
+    return render_template('new_user.html')
+
 @index_views.route('/gestao', methods=['GET'])
 def management_page():
     return render_template('management.html')
