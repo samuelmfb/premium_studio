@@ -21,7 +21,7 @@ def handle_user():
 
         if User.query.filter_by(id_user = id_user, user_name=user_name).first():
             return jsonify({
-                "error": "user already exists."
+                "error": "Usuário já existe."
             }), HTTP_409_CONFLICT
 
         user = User(
@@ -83,7 +83,7 @@ def get_user(id):
 
     if not user:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     return jsonify({
@@ -103,7 +103,7 @@ def edit_user(id):
     user = User.query.filter_by(id_user=id).first()
     if not user:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     id_user = id
@@ -140,7 +140,7 @@ def delete_user(id):
     user = User.query.filter_by(id_user=id).first()
     if not user:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(user)
     db.session.commit()

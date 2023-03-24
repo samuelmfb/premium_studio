@@ -18,14 +18,14 @@ buttonRegister.addEventListener("click", function(e){
    })
     .done(function(response, msg){
         console.log(response,msg);
-        alert('Usuário criado com sucesso!');
+        alert(`Usuário criado com sucesso!\n${response['message']}`);
         location.reload();
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){ 
             msg = response['responseJSON']['msg'];
             if (msg == 'Token has expired') {
-                alert(msg);
+                alert('Token expirou. Redirecionando para a tela de login.');
                 window.location.replace("/login");
             };
         } 

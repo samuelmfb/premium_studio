@@ -19,11 +19,11 @@ def register():
 
     #validates password length
     if len(password) < 6:
-        return jsonify({'error': 'Password is too short.'}), HTTP_400_BAD_REQUEST
+        return jsonify({'error': 'Senha deve ter no mínimo 7 caracteres.'}), HTTP_400_BAD_REQUEST
     
     #validates user_name length
     if len(user_name) < 6:
-        return jsonify({'error': 'User name is too short.'}), HTTP_400_BAD_REQUEST
+        return jsonify({'error': 'Nome do usuário deve ter no mínimo 7 caracteres.'}), HTTP_400_BAD_REQUEST
     
     #validates user_name
     #if not user_name.isalnum() or " " in user_name:
@@ -31,15 +31,15 @@ def register():
 
     #validates email
     if not validators.email(email):
-        return jsonify({'error': 'Email is not valid.'}), HTTP_400_BAD_REQUEST
+        return jsonify({'error': 'Endereço de e-mail não é válido.'}), HTTP_400_BAD_REQUEST
     
     #checks if email is unique
     if User.query.filter_by(email = email).first() is not None:
-        return jsonify({'error': 'Email is already in use.'}), HTTP_409_CONFLICT
+        return jsonify({'error': 'Endereço de e-mail já está sendo utilizado.'}), HTTP_409_CONFLICT
     
     #checks if user_name is unique
     if User.query.filter_by(user_name = user_name).first() is not None:
-        return jsonify({'error': 'Email is already in use.'}), HTTP_409_CONFLICT
+        return jsonify({'error': 'Nome do usuário já está sendo utilizado.'}), HTTP_409_CONFLICT
     
     pwd_hash = generate_password_hash(password)
     user = User(
@@ -53,7 +53,7 @@ def register():
 
 
     return jsonify({
-        "message": "User created.",
+        "message": f"Usuário {user_name} cadastrado com o e-mail {email}.",
         "user": {
             "user_name": user_name, "email": email
         }
@@ -80,7 +80,7 @@ def login():
                     "email": user.email
                 }
             })
-    return jsonify ({"error": "Wrong credentials."}), HTTP_401_UNAUTHORIZED
+    return jsonify ({"error": "Credenciais incorretas."}), HTTP_401_UNAUTHORIZED
 
 
 @auth.get("/me")

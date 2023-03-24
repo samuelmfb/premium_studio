@@ -17,7 +17,7 @@ def handle_producer():
         
         if Producer.query.filter_by(name=name).first():
             return jsonify({
-                "error": "producer already exists."
+                "error": "Produtor já existe."
             }), HTTP_409_CONFLICT
 
         producer = Producer(
@@ -65,7 +65,7 @@ def get_producer(id):
     producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     return jsonify({
         "id": producer.id_producer,
@@ -80,7 +80,7 @@ def edit_producer(id):
     producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     name = request.get_json().get("name", "")
@@ -102,7 +102,7 @@ def delete_producer(id):
     producer = Producer.query.filter_by(id_producer=id).first()
     if not producer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(producer)
     db.session.commit()

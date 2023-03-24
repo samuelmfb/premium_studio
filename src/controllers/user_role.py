@@ -17,7 +17,7 @@ def handle_user_role():
 
         if UserRole.query.filter_by(user_role_name=user_role_name).first():
             return jsonify({
-                "error": "role already exists."
+                "error": "Papel já existe."
             }), HTTP_409_CONFLICT
 
         user_role = UserRole(
@@ -63,7 +63,7 @@ def get_user_role(id):
     user_role = UserRole.query.filter_by(id_user_role=id).first()
     if not user_role:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     return jsonify({
         "id_user_role": user_role.id_user_role,
@@ -77,7 +77,7 @@ def edit_user_role(id):
     user_role = UserRole.query.filter_by(id_user_role=id).first()
     if not user_role:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     user_role_name = request.get_json().get("user_role_name", "")
@@ -97,7 +97,7 @@ def delete_user_role(id):
     user_role = UserRole.query.filter_by(id_user_role=id).first()
     if not user_role:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(user_role)
     db.session.commit()

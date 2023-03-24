@@ -25,7 +25,7 @@ def handle_task():
 
         if Task.query.filter_by(id_project = id_project, id_producer = id_producer, deadline=deadline).first():
             return jsonify({
-                "error": "task already exists."
+                "error": "A tarefa já existe."
             }), HTTP_409_CONFLICT
 
         task = Task(
@@ -82,7 +82,7 @@ def get_task(id):
     task = Task.query.filter_by(id_task=id).first()
     if not task:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     return jsonify({
         "id": task.id,
@@ -96,7 +96,7 @@ def edit_task(id):
     task = Task.query.filter_by(id_task=id).first()
     if not task:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     id_producer = request.get_json().get("id_producer", "")
@@ -137,7 +137,7 @@ def delete_task(id):
     task = Task.query.filter_by(id_task=id).first()
     if not task:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(task)
     db.session.commit()

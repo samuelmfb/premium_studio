@@ -19,7 +19,7 @@ def handle_project():
         
         if Project.query.filter_by(id_customer = id_customer).first():
             return jsonify({
-                "error": "project already exists."
+                "error": "Projeto já existe."
             }), HTTP_409_CONFLICT
 
         project = Project(
@@ -70,7 +70,7 @@ def get_project(id):
     project = Project.query.filter_by(id_project=id).first()
     if not project:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     return jsonify({
         "customer": project.customer,
@@ -85,7 +85,7 @@ def edit_project(id):
     project = Project.query.filter_by(id_project=id).first()
     if not project:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     id_customer = request.get_json().get("id_customer", "")
@@ -116,7 +116,7 @@ def delete_project(id):
     project = Project.query.filter_by(id_project=id).first()
     if not project:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(project)
     db.session.commit()

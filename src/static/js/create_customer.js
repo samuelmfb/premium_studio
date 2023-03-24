@@ -27,7 +27,7 @@ button.addEventListener("click", function(e){
         if ('msg'in response['responseJSON']){ 
             msg = response['responseJSON']['msg'];
             if (msg == 'Token has expired') {
-                alert(msg);
+                alert('Token expirou. Redirecionando para a tela de login.');
                 window.location.replace("/login");
             };
         } 

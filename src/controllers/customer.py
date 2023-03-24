@@ -19,12 +19,12 @@ def handle_customer():
         #checks if email is valid
         if not validators.email(email):
             return jsonify({
-                "error": "Email is invalid."
+                "error": "Endereço de e-mail é inválido."
             }), HTTP_400_BAD_REQUEST
 
         if Customer.query.filter_by(name=name).first():
             return jsonify({
-                "error": "Customer already exists."
+                "error": "Cliente já existe."
             }), HTTP_409_CONFLICT
 
         customer = Customer(
@@ -74,7 +74,7 @@ def get_Customer(id_customer):
     customer = Customer.query.filter_by(id_customer=id_customer).first()
     if not customer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     return jsonify({
         "name": customer.name,
@@ -90,7 +90,7 @@ def edit_customer(id):
 
     if not customer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     
     name = request.get_json().get("name", "")
@@ -98,7 +98,7 @@ def edit_customer(id):
     phone_num = request.get_json().get("phone_num", "")
     if not validators.email(email):
         return jsonify({
-            "error": "Email is invalid."
+            "error": "Endereço de e-mail é inválido."
         }), HTTP_400_BAD_REQUEST
 
     customer.name = name
@@ -118,7 +118,7 @@ def delete_customer(id):
     customer = Customer.query.filter_by(id_customer=id).first()
     if not Customer:
         return jsonify({
-            "message": "Item not found."
+            "message": "Item não encontrado."
         })
     db.session.delete(customer)
     db.session.commit()
