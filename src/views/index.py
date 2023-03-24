@@ -14,11 +14,11 @@ def login_page():
 
 @index_views.route('/gestao', methods=['GET'])
 def management_page():
-    return render_template('gestao.html')
+    return render_template('management.html')
 
 @index_views.route('/acessos', methods=['GET'])
 def permissions_page():
-    return render_template('acessos.html')
+    return render_template('permissions.html')
 
 @index_views.route('/init', methods=['GET'])
 def init():
