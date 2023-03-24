@@ -22,7 +22,18 @@ buttonRegister.addEventListener("click", function(e){
         location.reload();
    })
    .fail(function(response, textStatus, msg){
-        const error = response['responseJSON']['error'];
-        alert(error);
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert(msg);
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
     });
 })
