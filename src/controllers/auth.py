@@ -26,8 +26,8 @@ def register():
         return jsonify({'error': 'User name is too short.'}), HTTP_400_BAD_REQUEST
     
     #validates user_name
-    if not user_name.isalnum() or " " in user_name:
-        return jsonify({'error': 'User name must be alphanumeric, with no spaces.'}), HTTP_400_BAD_REQUEST
+    #if not user_name.isalnum() or " " in user_name:
+    #    return jsonify({'error': 'User name must be alphanumeric, with no spaces.'}), HTTP_400_BAD_REQUEST
 
     #validates email
     if not validators.email(email):
