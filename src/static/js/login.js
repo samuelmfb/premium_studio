@@ -14,10 +14,11 @@ loginButton.addEventListener("click", function(e){
         data : JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
    })
-   .done(function(msg){
+    .done(function(msg){
         window.location.replace("/");
    })
-   .fail(function(jqXHR, textStatus, msg){
-        alert("Usuário não autorizado, ou senha inválida.");
-   });
+    .fail(function(response, textStatus, msg){
+        const error = response['responseJSON']['error'];
+        alert(error);
+    });
 })
