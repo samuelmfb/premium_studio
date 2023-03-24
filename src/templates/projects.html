@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Premium Studio - Painel</title>
+    <title>Premium Studio - Projetos</title>
     <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/static/css/main.css'>
@@ -15,8 +15,17 @@
     <!-- Header -->
     <!-- jumbotron -->
     <div class="mb-4 bg-blue d-flex align-middle mt-5">
-        <div class="container-fluid py-5 d-flex justify-content-center">
-            <h2>Projetos</h2>
+        <div class="container-fluid py-5 d-flex justify-content-around">
+            <div class="col py-5 d-flex justify-content-start">
+                <a href="/" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
+            </div>
+            <div class="col py-5 d-flex justify-content-center">
+                <h2>Projetos</h2>
+            </div>
+            <div class="col py-5 d-flex justify-content-start">
+                
+            </div>
+            
         </div>
     </div>
     <!-- lista -->
@@ -25,7 +34,7 @@
     </div>
 
     <div class="d-flex justify-content-start">
-        <button type="button" class="btn btn-basic m-5 "><i class="fa-solid fa-circle-plus"></i></i> Novo Projeto</button>
+        <button type="button" class="btn btn-basic m-5 " onclick="location.href='/adicionar_projeto'"><i class="fa-solid fa-circle-plus"></i></i> Novo Projeto</button>
     </div>
     
 </body>
