@@ -1,15 +1,15 @@
 import sqlite3
 import os.path
-
+from werkzeug.security import check_password_hash,generate_password_hash
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "premium.db")
 connection = sqlite3.connect(db_path)
 
 
 users  = [
-        ("teste", "teste@teste.com", "e0e17f7927ac6c5e4727f336f3a74171aa1162994a732f356cfe60ec7aeae902", "2"),
-        ("samuel", "samuel@teste.com", "e0e17f7927ac6c5e4727f336f3a74171aa1162994a732f356cfe60ec7aeae902", "1"),
-        ("glauber", "glauber@teste.com", "e0e17f7927ac6c5e4727f336f3a74171aa1162994a732f356cfe60ec7aeae902", "1"),
+        ("teste", "teste@teste.com", "senhateste", "2"),
+        ("samuel", "samuel@teste.com", "senhateste", "1"),
+        ("glauber", "glauber@teste.com", "senhateste", "1"),
     ]
 
 roles  = [
@@ -47,7 +47,7 @@ for data in roles:
     cur.execute(f"INSERT INTO user_role (user_role_name) VALUES ('{data}')")
 for data in users: 
     cur.execute(f"INSERT INTO user (user_name, email, password, id_user_role) \
-                VALUES ('{data[0]}','{data[1]}','{data[2]}',{data[3]})")
+                VALUES ('{data[0]}','{data[1]}','{generate_password_hash(data[2])}',{data[3]})")
 for data in producers: 
     cur.execute(f"INSERT INTO producer (name,area) \
                 VALUES ('{data[0]}','{data[1]}')")
