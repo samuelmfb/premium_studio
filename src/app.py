@@ -14,6 +14,10 @@ from flask_jwt_extended import JWTManager
 # from flasgger import Swagger, swag_from
 # from src.config.swagger import template, swagger_config
 from src.views import views
+# Le o dotenv:
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__,
     instance_relative_config = True)
 
