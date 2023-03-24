@@ -11,6 +11,7 @@ from src.controllers.user_role import user_role
 from src.controllers.user import user
 from src.database import db
 from flask_jwt_extended import JWTManager
+#from src.data import seed_db
 # from flasgger import Swagger, swag_from
 # from src.config.swagger import template, swagger_config
 from src.views import views
@@ -38,6 +39,8 @@ for view in views:
 db.app = app
 db.init_app(app)
 
+
+
 JWTManager(app)
 # Swagger(app, config=swagger_config, template=template)
 app.register_blueprint(auth)
@@ -59,3 +62,4 @@ def handle_500(e):
 #Run
 if __name__ == '__main__':
     app.run(debug = True)
+    #data = seed_db()

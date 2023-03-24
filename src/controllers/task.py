@@ -19,7 +19,7 @@ def handle_task():
         description = request.get_json().get("description", "")
         deadline = request.get_json().get("deadline", "")
         if deadline:
-            deadline = datetime.strptime(deadline, '%Y-%m-%d').date()
+            deadline = datetime.strptime(deadline, '%d/%m/%Y').date()
         else:
             deadline = None
 

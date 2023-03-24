@@ -21,8 +21,12 @@ loginButton.addEventListener("click", function(e){
         window.location.replace("/");
    })
     .fail(function(response, textStatus, msg){
-        const error = response['responseJSON']['error'];
-        alert(error);
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
     });
 })
 
