@@ -79,6 +79,31 @@ def get_project(id):
         "description": project.description
     }), HTTP_200_OK
 
+@project.get("/customer/<int:id>")
+@jwt_required()
+def get_project_by_customer(id):
+    projects = Project.query.filter_by(id_customer=id).all()
+    if not projects:
+        return jsonify({
+            "message": "Item não encontrado."
+        })
+    
+    data = []
+    if len(projects) == 0:
+        return jsonify ({
+            "data": None,
+        }), HTTP_200_OK
+    for project in projects:
+        data.append({
+            "customer": project.customer.name,
+            "full_value": project.full_value,
+            "producer": project.producer.name,
+            "description": project.description
+        })
+    return jsonify ({
+        "data": data,
+    }), HTTP_200_OK
+
 @project.put("/<int:id>")
 @project.patch("/<int:id>")
 @jwt_required()

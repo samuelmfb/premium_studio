@@ -106,7 +106,6 @@ def get_task_by_project(id):
         data.append({
             "id_task": task.id_task,
             "project": task.project.description,
-            "producer": task.producer.name,
             "deadline": deadline,
             "started": task.started,
             "finished": task.finished,
