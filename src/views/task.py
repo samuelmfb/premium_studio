@@ -4,6 +4,6 @@ from src.database import db
 
 task_views = Blueprint('task_views', __name__, template_folder='../templates')
 
-@task_views.route('/tarefa', methods=['GET'])
-def index_page():
-    return render_template('tasks.html')
+@task_views.route('/tarefa/<id>', methods=['GET'])
+def index_page(id):
+    return render_template('tasks.html', id_project = id)

@@ -15,7 +15,7 @@
     <!-- Header -->
     <!-- jumbotron -->
     <div class="mb-4 bg-blue d-flex align-middle mt-5">
-        <div class="container-fluid py-5 d-flex justify-content-around">
+        <div id="project" project="{{ id_project }}" class="container-fluid py-5 d-flex justify-content-around">
             <div class="col py-5 d-flex justify-content-start">
                 <a href="/projetos" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
             </div>
@@ -33,8 +33,8 @@
         <p>Descrição</p>
     </div>
     
-    <div class="container-md bg-light-blue d-flex justify-content-between align-content-center ml-0" >
-        <p class="m-3">Projeto 1</p>
+    <div  class="container-md bg-light-blue d-flex justify-content-between align-content-center ml-0" >
+        <p id="project_name" class="m-3">Projeto 1</p>
     </div>
 
     <div class="container d-flex justify-content-around m-3">
@@ -59,7 +59,7 @@
     </div>
     <div class="container">    
         <div class="d-flex justify-content-start">
-            <button type="submit" id="bt-submit" class="btn btn-basic m-5 "><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
+            <button type="submit" id="bt-submit" class="btn btn-basic m-5 " onclick="location.href='/tarefa/{{ id_project }}'"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
         </div>
         <div class="form-check form-switch bg-light-blue switch">
             <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">

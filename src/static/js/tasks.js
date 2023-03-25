@@ -1,4 +1,5 @@
 const button = document.getElementById("bt-submit");
+const project = Number(document.getElementById('task').getAttribute('project'));
 $(document).ready(function() {
     login_validation();
 })
@@ -10,7 +11,8 @@ button.addEventListener("click", function(e){
     data = {
         "title": title,
         "deadline" : deadline,
-        "description" : description
+        "description" : description,
+        "id_project" : project
     }
     $.ajax({
         url : "/api/v1/task",

@@ -7,6 +7,7 @@ from src.models.user import User
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token,create_refresh_token
 from flasgger import Swagger, swag_from
 import validators
+import datetime
 
 auth = Blueprint("auth",__name__,url_prefix="/api/v1/auth")
 
@@ -70,7 +71,7 @@ def login():
         is_pass_correct = check_password_hash(user.password, password)
         if is_pass_correct:
             refresh = create_refresh_token(identity = user.id_user)
-            access = create_access_token(identity = user.id_user)
+            access = create_access_token(identity = user.id_user, fresh=datetime.timedelta(minutes=15))
 
             return jsonify({
                 "user": {

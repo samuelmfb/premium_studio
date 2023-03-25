@@ -12,7 +12,7 @@ def index_page():
 def create_project_page():
     return render_template('create_project.html')
 
-@project_views.route('/exibir_projeto', methods=['GET'])
-def show_project_page():
-    return render_template('show_project.html')
 
+@project_views.route('/exibir_projeto/<id>', methods=['GET'])
+def show_project_page(id):
+    return render_template('show_project.html', id_project = id)

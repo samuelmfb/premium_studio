@@ -37,12 +37,19 @@ projects  = [
         ("Remix de Thunderstorm", "20000.00", "3", "3"),
     ]
 
+tasks = [ 
+        ("Afinar voz", "2023-04-03", "Cuidado com o refrão", 1),
+        ("Preparar beat", "2023-04-03", "Deixar o groove bem animado", 1),
+        ("Gravar solo de guitarra", "2023-04-03", "Usar bastante distorção", 1),
+]
+
 cur = connection.cursor()
 cur.execute("delete from user_role")
 cur.execute("delete from user")
 cur.execute("delete from customer")
 cur.execute("delete from producer")
 cur.execute("delete from project")
+cur.execute("delete from task")
 for data in roles: 
     cur.execute(f"INSERT INTO user_role (user_role_name) VALUES ('{data}')")
 for data in users: 
@@ -56,7 +63,10 @@ for data in customers:
                 VALUES ('{data[0]}','{data[1]}', '{data[2]}')")
 for data in projects: 
     cur.execute(f"INSERT INTO project (description,full_value,id_customer,id_producer) \
-                VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]})")
+                VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]})") 
+for data in tasks:
+    cur.execute(f"INSERT INTO task (title,deadline,description,id_project) \
+                VALUES ('{data[0]}','{data[1]}', '{data[2]}', {data[3]})")
 
 connection.commit()
 connection.close()

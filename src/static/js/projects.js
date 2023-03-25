@@ -14,7 +14,7 @@ $(document).ready(function() {
         projects = response['data'];
         for (project in projects) {
             console.log(project)
-            html += "<div id='" + project +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' > \
+            html += "<div id='" + project +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ project+")' > \
                 <p class='m-3'>" + projects[project]['description']+ "</p> \
             </div>"
         }
@@ -92,4 +92,8 @@ function login_validation() {
             };
         }
     });
+}
+
+function show_project(id) {
+    window.location.replace("/exibir_projeto/" + id);
 }

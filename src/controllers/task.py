@@ -18,6 +18,7 @@ def handle_task():
         title = request.get_json().get("title", "")
         description = request.get_json().get("description", "")
         deadline = request.get_json().get("deadline", "")
+
         if deadline:
             deadline = datetime.strptime(deadline, '%d/%m/%Y').date()
         else:
@@ -54,8 +55,8 @@ def handle_task():
         for task in tasks.items:
             data.append({
                 "id_task": task.id_task,
-                "project": task.project.description,
-                "producer": task.producer.name,
+                #"project": task.project.description,
+                #"producer": task.producer.name,
                 "deadline": task.deadline,
                 "started": task.started,
                 "finished": task.finished,
@@ -87,6 +88,33 @@ def get_task(id):
     return jsonify({
         "id": task.id,
         "description": task.description
+    }), HTTP_200_OK
+
+@task.get("/project/<int:id>")
+@jwt_required()
+def get_task_by_project(id):
+    tasks = Task.query.filter_by(id_project = id).all()
+    
+    data = []
+    if len(tasks) == 0:
+        return jsonify ({
+            "data": None,
+        }), HTTP_200_OK
+    for task in tasks:
+        deadline = task.deadline
+        deadline = deadline.strftime('%Y-%m-%d')
+        data.append({
+            "id_task": task.id_task,
+            "project": task.project.description,
+            "producer": task.producer.name,
+            "deadline": deadline,
+            "started": task.started,
+            "finished": task.finished,
+            "title": task.title,
+            "description": task.description
+        })
+    return jsonify ({
+        "data": data,
     }), HTTP_200_OK
 
 @task.put("/<int:id>")
