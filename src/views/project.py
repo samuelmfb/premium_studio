@@ -2,6 +2,8 @@ from flask import Blueprint, redirect, render_template, request, send_from_direc
 from src.database import db
 from src.controllers.producer import Producer
 from src.controllers.customer import Customer
+from src.controllers.task import Task
+from src.controllers.project import Project
 #from controllers.user import handle_user
 
 project_views = Blueprint('project_views', __name__, template_folder='../templates')
@@ -41,4 +43,31 @@ def create_project_page():
 
 @project_views.route('/exibir_projeto/<id>', methods=['GET'])
 def show_project_page(id):
-    return render_template('show_project.html', id_project = id)
+    tasks = Task.query.filter_by(id_project = id).all()
+    
+    ts = []
+    if len(tasks) == 0:
+        return render_template('show_project.html', tasks = None)
+    for task in tasks:
+        checked = ""
+        if task.finished != None:
+            checked = "checked"
+        ts.append({
+            "id_task": task.id_task,
+            "checked": checked,
+            "title": task.title,
+            "description": task.description
+        })
+
+    project = Project.query.filter_by(id_project = id).first()
+    
+    pj = {
+        "name": project.name,
+        "customer": project.customer.name,
+        "producer": project.producer.name,
+        "full_value": project.full_value,
+        "description": project.description,
+    }
+
+
+    return render_template('show_project.html', tasks = ts, project = pj)

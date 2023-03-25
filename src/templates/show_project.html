@@ -20,7 +20,7 @@
                 <a href="/projetos" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
             </div>
             <div class="col py-5 d-flex justify-content-center">
-                <h2>Projeto</h2>
+                <h2>{{ project.name }}</h2>
             </div>
             <div class="col py-5 d-flex justify-content-start">
 
@@ -28,42 +28,59 @@
 
         </div>
     </div>
+    
     <!-- lista -->
     <div class="container">
         <p>Descrição</p>
     </div>
 
     <div  class="container-md bg-light-blue d-flex justify-content-between align-content-center ml-0" >
-        <p id="project_name" class="m-3">Projeto 1</p>
+        <p id="project_name" class="m-3">{{ project.description }}</p>
     </div>
 
     <div class="container d-flex justify-content-around m-3">
-        <p id="producer">Produtor: Roberto</p>
-        <p id="customer">Cliente: MasterSound</p>
-        <p id="full_value">Valor: R4 12.500,00</p>
+        <p id="producer">Produtor: {{ project.producer }}</p>
+        <p id="customer">Cliente: {{ project.customer }}</p>
+        <p id="full_value">Valor: R$ {{ project.full_value }}</p>
     </div>
     
     <div id="tasks" class="container">
         <p>Tarefas</p>
-        <div class="row bg-light-blue d-flex justify-content-between align-content-center ml-0 p-3" >
-            <div class="form-check">
-                <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label ml-3" for="flexCheckDefault" id="taskName">
-                   Refatorar codigo
-                </label>
-
-              </div>
-
-              <button type="button" id="bt-delete-task" class="bt-delete-task btn btn-basic"><i class="fa-regular fa-trash-can"></i></button>
-        </div>
+        {% if tasks != None %}
+            {% for task in tasks %}
+                <div id="{{ task.id_task }}" class="row bg-light-blue d-flex justify-content-between align-content-center ml-0 p-3" >
+                    <div class="row d-flex justify-content-between align-items-center" >
+                        <div class="col d-flex justify-content-start" >
+                            <div class="form-check">
+                                <div class="round" data-toggle="tooltip"  title="Concluir ou restaurar tarefa">
+                                    <input type="checkbox" id="checkbox-{{ task.id_task }}" {{ task.checked }} class="flexCheckDefault"  />
+                                    <label class="form-check-label ml-3" for="checkbox-{{ task.id_task }}" id="taskName">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-start" data-toggle="tooltip"  title="{{ task.description }}">
+                            <p class="ml-5">{{ task.title }}</p>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <button type="button" id="bt-delete-task" class="bt-delete-task btn btn-basic" data-toggle="tooltip"  title="Excluir tarefa"><i class="fa-regular fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     <div class="container">
-        <div class="d-flex justify-content-start">
-            <button type="submit" id="bt-new-task" class="btn btn-basic m-5 " onclick="location.href='/tarefa/{{ id_project }}'"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
-        </div>
-        <div class="form-check form-switch bg-light-blue switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchOcultarConcluidas">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Ocultar Concluídas</label>
+        <div class="row d-flex justify-content-between align-items-center m-5">
+            <div class="col d-flex justify-content-start p=0">
+                <button type="submit" id="bt-new-task" class="btn btn-basic" onclick="location.href='/tarefa/{{ id_project }}'"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
+            </div>
+            <div class="col d-flex justify-content-end p=0">
+                <div class="switch form-check form-switch bg-light-blue switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchOcultarConcluidas">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Ocultar Concluídas</label>
+                </div>
+            </div>
         </div>
     </div>
 </body>
