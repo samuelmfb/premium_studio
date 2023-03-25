@@ -1,6 +1,6 @@
-const button = document.getElementById("bt-submit");
+const btSalvar = document.getElementById("bt-submit");
 
-button.addEventListener("click", function(e){
+btSalvar.addEventListener("click", function(e){
     e.preventDefault();
     const title = document.getElementById('title').value;
     const deadline = document.getElementById('deadline').value;
@@ -19,8 +19,8 @@ button.addEventListener("click", function(e){
    })
     .done(function(response, msg){
         console.log(response,msg);
-        alert('Registro adicionado com sucesso!');
-        location.reload();
+        alert('Tarefa adicionada com sucesso!');
+        window.location.replace("/exibir_projeto");
    })
    .fail(function(response, textStatus, msg){
 
@@ -54,3 +54,6 @@ function getCookie(cname) {
     }
     return "";
     }
+
+
+

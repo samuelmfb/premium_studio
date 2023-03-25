@@ -48,21 +48,35 @@
         <div class="container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 p-3" >
             <div class="form-check">
                 <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label ml-3" for="flexCheckDefault">
+                <label class="form-check-label ml-3" for="flexCheckDefault" id="taskName">
                    Fazer diagrama de classes
                 </label>
                 
               </div>
               
-              <button type="submit" id="bt-submit" class="btn btn-basic m-5 "><i class="fa-regular fa-trash-can"></i></button>
+              <button type="submit" id="bt-delete-task" class="btn btn-basic m-5 "><i class="fa-regular fa-trash-can"></i></button>
+        </div>
+    </div>
+    <div id="tasks" class="container">
+        <p>Tarefas</p>
+        <div class="container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 p-3" >
+            <div class="form-check">
+                <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label ml-3" for="flexCheckDefault" id="taskName">
+                   Refatorar codigo
+                </label>
+                
+              </div>
+              
+              <button type="submit" id="bt-delete-task" class="btn btn-basic m-5 "><i class="fa-regular fa-trash-can"></i></button>
         </div>
     </div>
     <div class="container">    
         <div class="d-flex justify-content-start">
-            <button type="submit" id="bt-submit" class="btn btn-basic m-5 "><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
+            <button type="submit" id="bt-new-task" class="btn btn-basic m-5 "><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
         </div>
         <div class="form-check form-switch bg-light-blue switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <input class="form-check-input" type="checkbox" id="flexSwitchOcultarConcluidas">
             <label class="form-check-label" for="flexSwitchCheckDefault">Ocultar Concluídas</label>
         </div>
     </div>
