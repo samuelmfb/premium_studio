@@ -27,7 +27,7 @@ $(document).ready(function() {
             console.log(project)
             id = projects[project]['id_project'];
             html += "<div id='" + id +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ id+")' > \
-                <p class='m-3'>" + projects[project]['description']+ "</p> \
+                <p class='m-3'>" + projects[project]['name']+ "</p> \
             </div>"
         }
         list.innerHTML = html;   

@@ -32,9 +32,9 @@ producers  = [
     ]
 
 projects  = [
-        ("Álbum Kylie Minogue", "120000.00", "1", "1"),
-        ("Jingle de Campanha", "15000.00", "2", "2"),
-        ("Remix de Thunderstorm", "20000.00", "3", "3"),
+        ("Álbum Kylie Minogue", "120000.00", "1", "1", 'Kylie on Acid'),
+        ("Jingle de Campanha", "15000.00", "2", "2", 'Caixa 2 do Partido'),
+        ("Remix de Thunderstorm", "20000.00", "3", "3", 'Trovão do amor'),
     ]
 
 tasks = [ 
@@ -62,8 +62,8 @@ for data in customers:
     cur.execute(f"INSERT INTO customer (name,email,phone_num) \
                 VALUES ('{data[0]}','{data[1]}', '{data[2]}')")
 for data in projects: 
-    cur.execute(f"INSERT INTO project (description,full_value,id_customer,id_producer) \
-                VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]})") 
+    cur.execute(f"INSERT INTO project (description,full_value,id_customer,id_producer, name) \
+                VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]}, '{data[4]}')") 
 for data in tasks:
     cur.execute(f"INSERT INTO task (title,deadline,description,id_project) \
                 VALUES ('{data[0]}','{data[1]}', '{data[2]}', {data[3]})")

@@ -16,8 +16,9 @@ def handle_project():
         description = request.get_json().get("description", "")
         full_value = request.get_json().get("full_value", "")
         id_producer = request.get_json().get("id_producer", "")
+        name = request.get_json().get("name", "")
         
-        if Project.query.filter_by(id_customer = id_customer).first():
+        if Project.query.filter_by(name = name).first():
             return jsonify({
                 "error": "Projeto já existe."
             }), HTTP_409_CONFLICT
@@ -26,16 +27,17 @@ def handle_project():
             id_customer = id_customer, 
             description = description,
             full_value = full_value,
-            id_producer = id_producer
+            id_producer = id_producer,
+            name = name
         )
 
         db.session.add(project)
         db.session.commit()
 
         return jsonify({
-            "customer": project.customer,
+            "customer": project.customer.name,
             "full_value": project.full_value,
-            "description": project.description
+            "name": project.name
         }), HTTP_201_CREATED
     
     else:
@@ -49,6 +51,7 @@ def handle_project():
                 "id_project": project.id_project,
                 "customer": project.customer.name,
                 "full_value": project.full_value,
+                "name": project.name,
                 "description": project.description
             })
         meta = {
@@ -78,6 +81,7 @@ def get_project(id):
         "customer": project.customer.name,
         "full_value": project.full_value,
         "producer": project.producer.name,
+        "name": project.name,
         "description": project.description
     }), HTTP_200_OK
 
@@ -101,6 +105,7 @@ def get_project_by_customer(id):
             "customer": project.customer.name,
             "full_value": project.full_value,
             "producer": project.producer.name,
+            "name": project.name,
             "description": project.description
         })
     return jsonify ({
@@ -121,6 +126,7 @@ def edit_project(id):
     description = request.get_json().get("description", "")
     full_value = request.get_json().get("full_value", "")
     id_project = request.get_json().get("id_project", "")
+    name = request.get_json().get("name", "")
     
     if id_customer:
         project.id_customer = id_customer
@@ -130,13 +136,14 @@ def edit_project(id):
         project.full_value = full_value
     if id_project:
         project.id_project = id_project
-
+    if name:
+        project.name = name
 
     db.session.commit()
 
     return jsonify({
         "id": project.id_project,
-        "name": project.description
+        "name": project.name
     }), HTTP_201_CREATED
 
 @project.delete("/<int:id>")
