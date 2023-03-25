@@ -1,25 +1,36 @@
 const list = document.getElementById("lista");
+const customer = (document.getElementById('project').getAttribute('customer'));
 
 $(document).ready(function() {
     login_validation();
+    id = "";
+    if (customer != "") { 
+        id = "/" + customer;
+    } 
     $.ajax({
-        url : "/api/v1/project",
+        url : "/api/v1/project" + id,
         type : 'get',
         contentType: "application/json; charset=utf-8",
         headers: {"Authorization": "Bearer " + getCookie('premium_access')}
    })
     .done(function(response, msg, data){
-        console.log(response,msg);
+        console.log("ajax",response,msg);
         html = "";
-        projects = response['data'];
+        projects = [];
+        if (Array.isArray(response)){
+            projects = response['data']    
+        } else {
+            projects.push(response)
+        }
+        console.log(projects)
         for (project in projects) {
             console.log(project)
-            html += "<div id='" + project +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ project+")' > \
+            id = projects[project]['id_project'];
+            html += "<div id='" + id +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ id+")' > \
                 <p class='m-3'>" + projects[project]['description']+ "</p> \
             </div>"
         }
-        list.innerHTML = html;
-        
+        list.innerHTML = html;   
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){ 

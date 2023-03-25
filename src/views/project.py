@@ -7,7 +7,8 @@ project_views = Blueprint('project_views', __name__, template_folder='../templat
 @project_views.route('/projetos', methods=['GET'])
 def index_page():
     link_voltar = "/"
-    return render_template('projects.html', link_voltar = link_voltar)
+    id_customer = ""
+    return render_template('projects.html', link_voltar = link_voltar, id_customer= id_customer)
 
 @project_views.route('/projetos/<id>', methods=['GET'])
 def projects_by_customer_page(id):

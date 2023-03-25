@@ -46,6 +46,7 @@ def handle_project():
         data = []
         for project in projects.items:
             data.append({
+                "id_project": project.id_project,
                 "customer": project.customer.name,
                 "full_value": project.full_value,
                 "description": project.description
@@ -73,6 +74,7 @@ def get_project(id):
             "message": "Item não encontrado."
         })
     return jsonify({
+        "id_project": project.id_project,
         "customer": project.customer.name,
         "full_value": project.full_value,
         "producer": project.producer.name,
@@ -95,6 +97,7 @@ def get_project_by_customer(id):
         }), HTTP_200_OK
     for project in projects:
         data.append({
+            "id_project": project.id_project,
             "customer": project.customer.name,
             "full_value": project.full_value,
             "producer": project.producer.name,

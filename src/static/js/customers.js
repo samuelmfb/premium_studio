@@ -13,8 +13,9 @@ $(document).ready(function() {
         html = "";
         customers = response['data'];
         for (customer in customers) {
-            console.log(customer)
-            html += "<div id='" + customer + "' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' > \
+            id = customers[customer]['id_customer'];
+            console.log(id)
+            html += "<div id='" + id + "' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_projects("+ id +")'> \
                 <p class='m-3'>" + customers[customer]['name']+ "</p> \
             </div>"
         }
@@ -92,4 +93,8 @@ function login_validation() {
             };
         }
     });
+}
+
+function show_projects(id) {
+    window.location.replace("/projetos/" + id);
 }
