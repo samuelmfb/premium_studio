@@ -14,8 +14,9 @@ $(document).ready(function() {
         customers = response['data'];
         for (customer in customers) {
             id = customers[customer]['id_customer'];
+            let projetosCliente = `location.href='/projetos/${id}'`
             console.log(id)
-            html += "<div id='" + id + "' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_projects("+ id +")'> \
+            html += "<div id='" + id + "' onclick= "+ projetosCliente +" class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_projects("+ id +")'> \
                 <p class='m-3'>" + customers[customer]['name']+ "</p> \
             </div>"
         }
