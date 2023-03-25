@@ -16,7 +16,7 @@ btOcultarConcluidas.addEventListener("click", function(){
 });
 
 // Deletar tarefas:
-document.querySelectorAll("#bt-delete-task").forEach(item => {
+document.querySelectorAll(".bt-delete-task").forEach(item => {
     item.addEventListener("click", () => {
         let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
         alert(`Clicou para deletar a tarefa: ${nomeTarefa}`);
@@ -24,7 +24,7 @@ document.querySelectorAll("#bt-delete-task").forEach(item => {
 });
 
 // Marcar tarefa como concluida:
-document.querySelectorAll("#flexCheckDefault").forEach(item =>{
+document.querySelectorAll(".flexCheckDefault").forEach(item =>{
     item.addEventListener("click", () =>{
         let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
         if (item.checked == true){

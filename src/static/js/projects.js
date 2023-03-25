@@ -17,7 +17,7 @@ $(document).ready(function() {
         console.log("ajax",response,msg);
         html = "";
         projects = [];
-        if (Array.isArray(response)){
+        if (Array.isArray(response['data'])){
             projects = response['data']    
         } else {
             projects.push(response)
