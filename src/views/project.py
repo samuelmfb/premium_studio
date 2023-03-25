@@ -6,7 +6,13 @@ project_views = Blueprint('project_views', __name__, template_folder='../templat
 
 @project_views.route('/projetos', methods=['GET'])
 def index_page():
-    return render_template('projects.html')
+    link_voltar = "/"
+    return render_template('projects.html', link_voltar = link_voltar)
+
+@project_views.route('/projetos/<id>', methods=['GET'])
+def projects_by_customer_page(id):
+    link_voltar = "/clientes"
+    return render_template('projects.html', id_customer = id, link_voltar = link_voltar)
 
 @project_views.route('/adicionar_projeto', methods=['GET'])
 def create_project_page():
