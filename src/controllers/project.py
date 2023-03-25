@@ -73,8 +73,9 @@ def get_project(id):
             "message": "Item não encontrado."
         })
     return jsonify({
-        "customer": project.customer,
+        "customer": project.customer.name,
         "full_value": project.full_value,
+        "producer": project.producer.name,
         "description": project.description
     }), HTTP_200_OK
 

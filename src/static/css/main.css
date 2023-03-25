@@ -7,12 +7,12 @@
 }
 @font-face {
     font-family: Baloo;
-    src: url("/static/fonts/BalooPaaji2-Regular.ttf");
+    src: url("/static/css/fonts/BalooPaaji2-Regular.ttf");
 }
 
 body { 
     color: white !important; 
-    font-family: Baloo;
+    font-family: Baloo !important;
 }
 a {
     color: white !important;

@@ -1,6 +1,7 @@
 const list = document.getElementById("lista");
-
+const search = document.getElementById("search");
 $(document).ready(function() {
+    login_validation();
     let html_roles = "";
     $.ajax({
         url : "/api/v1/user_role",
@@ -27,9 +28,8 @@ $(document).ready(function() {
         .done(function(response, msg, data){
             html = "";
             users = response['data'];
-            console.log(roles)
             for (user in users) {
-                html += "<div id='" + user +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' > \
+                html += "<div id='" + user +"' style='display: block;' class='user container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' > \
                     <p class='m-3'>" + users[user]['user_name']+ "</p> \
                     " + html_roles + " \
                 </div>"
@@ -78,7 +78,6 @@ function list_roles() {
             html += "<option value='" + role + "'>" + roles[role]['user_role_name'] + "</option>";
         }
         html += "</select>";
-        console.log(html)
         return html;
         
    })
@@ -118,4 +117,63 @@ for(let i = 0; i < ca.length; i++) {
     }
 }
 return "";
+}
+
+function login_validation() {
+    if (getCookie('premium_access') == "") {
+        alert('Usuário não logado. Redirecionando para a tela de login.');
+                window.location.replace("/login")
+    }
+    $.ajax({
+        url : "/api/v1/auth/me",
+        type : 'get',
+        contentType: "application/json; charset=utf-8",
+        async: false, 
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg, data){
+        console.log("Usuário logado.");
+        
+   })
+   .fail(function(response, textStatus, msg){
+    console.log("Usuário não logado.");
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}
+
+function search_user() {
+    var users = document.getElementsByClassName("user");
+    let search_text = ""; 
+    search_text = search.value;
+    console.log(search_text)
+    search_length = search_text.length;
+    for (var i = 0; i < users.length; i++) {
+        let user = users[i].innerText.split('\n')[0];
+        console.log("oculto:",users[2])
+        if (user.trim().substring(0,search_length) != search_text) {
+            console.log(user.trim().substring(0,search_length), search_text, "diferente - oculta")
+            users[i].setAttribute("style", "display: none !important;");
+            document.getElementById(users[i].id).innerHTML = users[i].innerHTML;
+        } else if (search_text == "") {
+            console.log(user.trim().substring(0,search_length), search_text, "igual - exibe")
+            users[i].setAttribute("style", "");
+            document.getElementById(users[i].id).innerHTML = users[i].innerHTML;
+        } else {
+            console.log(user.trim().substring(0,search_length), search_text, "igual - exibe")
+            users[i].setAttribute("style", "");
+            document.getElementById(users[i].id).innerHTML = users[i].innerHTML;
+        };
+    }
 }

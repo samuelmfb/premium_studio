@@ -1,6 +1,9 @@
-const btSalvar = document.getElementById("bt-submit");
-
-btSalvar.addEventListener("click", function(e){
+const button = document.getElementById("bt-submit");
+const project = Number(document.getElementById('task').getAttribute('project'));
+$(document).ready(function() {
+    login_validation();
+})
+button.addEventListener("click", function(e){
     e.preventDefault();
     const title = document.getElementById('title').value;
     const deadline = document.getElementById('deadline').value;
@@ -8,7 +11,8 @@ btSalvar.addEventListener("click", function(e){
     data = {
         "title": title,
         "deadline" : deadline,
-        "description" : description
+        "description" : description,
+        "id_project" : project
     }
     $.ajax({
         url : "/api/v1/task",
@@ -24,13 +28,13 @@ btSalvar.addEventListener("click", function(e){
    })
    .fail(function(response, textStatus, msg){
 
-        if ('msg'in response['responseJSON']){ 
+        if ('msg'in response['responseJSON']){
             msg = response['responseJSON']['msg'];
             if (msg == 'Token has expired') {
                 alert('Token expirou. Redirecionando para a tela de login.');
                 window.location.replace("/login");
             };
-        } 
+        }
         if ('error'in response['responseJSON']){
             const error = response['responseJSON']['error'];
             if (error) {
@@ -54,6 +58,36 @@ function getCookie(cname) {
     }
     return "";
     }
+    function login_validation() {
+        if (getCookie('premium_access') == "") {
+            alert('Usuário não logado. Redirecionando para a tela de login.');
+                    window.location.replace("/login")
+        }
+        $.ajax({
+            url : "/api/v1/auth/me",
+            type : 'get',
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+       })
+        .done(function(response, msg, data){
+            console.log(response, msg);
 
-
-
+       })
+       .fail(function(response, textStatus, msg){
+        console.log(response, msg);
+            if ('msg'in response['responseJSON']){
+                msg = response['responseJSON']['msg'];
+                if (msg == 'Token has expired') {
+                    alert('Token expirou. Redirecionando para a tela de login.');
+                    window.location.replace("/login");
+                };
+            }
+            if ('error'in response['responseJSON']){
+                const error = response['responseJSON']['error'];
+                if (error) {
+                    alert(error);
+                };
+            }
+        });
+    }

@@ -1,6 +1,7 @@
 const list = document.getElementById("lista");
 
 $(document).ready(function() {
+    login_validation();
     $.ajax({
         url : "/api/v1/project",
         type : 'get',
@@ -13,7 +14,7 @@ $(document).ready(function() {
         projects = response['data'];
         for (project in projects) {
             console.log(project)
-            html += "<div id='" + project +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' > \
+            html += "<div id='" + project +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ project+")' > \
                 <p class='m-3'>" + projects[project]['description']+ "</p> \
             </div>"
         }
@@ -57,4 +58,42 @@ for(let i = 0; i < ca.length; i++) {
     }
 }
 return "";
+}
+
+function login_validation() {
+    if (getCookie('premium_access') == "") {
+        alert('Usuário não logado. Redirecionando para a tela de login.');
+                window.location.replace("/login")
+    }
+    $.ajax({
+        url : "/api/v1/auth/me",
+        type : 'get',
+        contentType: "application/json; charset=utf-8",
+        async: false, 
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg, data){
+        console.log(response, msg);
+        
+   })
+   .fail(function(response, textStatus, msg){
+    console.log(response, msg);
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}
+
+function show_project(id) {
+    window.location.replace("/exibir_projeto/" + id);
 }
