@@ -1,10 +1,3 @@
-// Adicionar nova tarefa:
-const btNewTask = document.getElementById("bt-new-task");
-btNewTask.addEventListener("click", function(e) {
-    e.preventDefault();
-    window.location.replace("/tarefa")
-});
-
 // Ocultar concluidas:
 const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas");
 btOcultarConcluidas.addEventListener("click", function(){
@@ -17,7 +10,6 @@ btOcultarConcluidas.addEventListener("click", function(){
         });
 
     } else {
-        
         document.querySelectorAll(".task-row").forEach(item => {
             item.setAttribute("style", "")
         });

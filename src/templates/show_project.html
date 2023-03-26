@@ -74,7 +74,7 @@
     <div class="container">
         <div class="row d-flex justify-content-between align-items-center m-5">
             <div class="col d-flex justify-content-start p=0">
-                <button type="submit" id="bt-new-task" class="btn btn-basic" onclick="add_task({{ project.id_project }})"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
+                <button type="button" id="bt-new-task" class="btn btn-basic" onclick="location.href='/tarefa/{{ project.id_project }}'"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
             </div>
             <div class="col d-flex justify-content-end p=0">
                 <div class="switch form-check form-switch bg-light-blue switch">

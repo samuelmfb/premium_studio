@@ -13,7 +13,6 @@ task = Blueprint("task",__name__,url_prefix="/api/v1/task")
 def handle_task():
     current_user = get_jwt_identity()
     if request.method == "POST":
-        id_producer = request.get_json().get("id_producer", "")
         id_project = request.get_json().get("id_project", "")
         title = request.get_json().get("title", "")
         description = request.get_json().get("description", "")
@@ -24,13 +23,12 @@ def handle_task():
         else:
             deadline = None
 
-        if Task.query.filter_by(id_project = id_project, id_producer = id_producer, deadline=deadline).first():
+        if Task.query.filter_by(title = title, id_project = id_project).first():
             return jsonify({
                 "error": "A tarefa já existe."
             }), HTTP_409_CONFLICT
 
         task = Task(
-            id_producer = id_producer, 
             id_project = id_project,
             description = description,
             deadline = deadline,
