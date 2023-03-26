@@ -4,6 +4,7 @@
     --azul-escuro: #001021;
     --azul-medio : #00264F;
     --azul-claro : #00346B;
+    --azul-claro-selecionado: #064e9c;
     --azul-mais-claro : #76b7fd;
 }
 @font-face {
@@ -29,7 +30,17 @@ a {
 
 .bg-light-blue {
     background-color: var(--azul-claro) !important;
+    transition: ease;
+    transition-duration: 100ms;
 }
+
+.bg-light-blue:hover {
+    background-color: var(--azul-claro-selecionado) !important;
+    transition: ease;
+    transition-duration: 100ms;
+    scale: 102%;
+}
+
 .btn-home {
     height: 180px !important;
     width: 180px !important;
@@ -42,6 +53,15 @@ a {
     padding-left: 35px !important;
     padding-right: 35px !important;
     background-color: var(--azul-claro) !important;
+    transition: ease;
+    transition-duration: 100ms;
+}
+
+.btn-basic:hover{
+    background-color: var(--azul-claro-selecionado) !important;
+    transition: ease;
+    transition-duration: 100ms;
+    scale: 110%;
 }
 .invert {
     filter :invert(1);
