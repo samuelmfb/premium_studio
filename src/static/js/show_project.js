@@ -1,46 +1,49 @@
-// Adicionar nova tarefa:
-const btNewTask = document.getElementById("bt-new-task");
-btNewTask.addEventListener("click", function(e) {
-    e.preventDefault();
-    window.location.replace("/tarefa")
-});
-
-// Ocultar concluidas:
-const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas");
-btOcultarConcluidas.addEventListener("click", function(){
-    if (btOcultarConcluidas.checked == true) {
-        alert("Ocultou as tarefas concluidas");
-    } else {
-        alert("Mostrou as tarefas concluidas");
-    }
-});
-
-// Deletar tarefas:
-document.querySelectorAll(".bt-delete-task").forEach(item => {
-    item.addEventListener("click", () => {
-        let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
-        alert(`Clicou para deletar a tarefa: ${nomeTarefa}`);
-    })
-});
-
-// Marcar tarefa como concluida:
-document.querySelectorAll(".flexCheckDefault").forEach(item =>{
-    item.addEventListener("click", () =>{
-        let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
-        if (item.checked == true){
-            alert(`Concluiu a tarefa: ${nomeTarefa}`);
-        } else {
-            alert(`Restaurou a tarefa: ${nomeTarefa}`);
-        }
-    })
-});
 
 
 // PARTE DO SAMUEL:
 
 $(document).ready(function() {
     login_validation();
-    
+
+    // Adicionar nova tarefa:
+    const btNewTask = document.getElementById("bt-new-task");
+    btNewTask.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.replace("/tarefa")
+    });
+
+    // Ocultar concluidas:
+    const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas");
+    btOcultarConcluidas.addEventListener("click", function(){
+        if (btOcultarConcluidas.checked == true) {
+            alert("Ocultou as tarefas concluidas");
+        } else {
+            alert("Mostrou as tarefas concluidas");
+        }
+    });
+
+    // Deletar tarefas:
+    document.querySelectorAll(".bt-delete-task").forEach(item => {
+        item.addEventListener("click", () => {
+            let elementoTarefa = item.parentElement.querySelector("#taskName");
+            alert(`Clicou para deletar a tarefa: ${elementoTarefa.textContent}`);
+        })
+    });
+
+    // Marcar tarefa como concluida:
+    document.querySelectorAll(".flexCheckDefault").forEach(item =>{
+        item.addEventListener("click", () =>{
+            let elementoTarefa = item.parentElement.querySelector("#taskName");
+            if (item.checked == true){
+                elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete")
+                alert(`Concluiu a tarefa: ${elementoTarefa.textContent}`);
+            } else {
+                elementoTarefa.setAttribute("class", "form-check-label ml-3")
+                alert(`Restaurou a tarefa: ${elementoTarefa.textContent}`);
+            }
+        })
+    });
+ 
 })
 function login_validation() {
     if (getCookie('premium_access') == "") {
