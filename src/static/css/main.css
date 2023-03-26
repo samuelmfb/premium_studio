@@ -158,11 +158,6 @@ visibility: hidden;
 
 }
 
-.task-incomplete {
-    animation: reverse 100ms;
-}
-
 .task-complete {
     text-decoration: line-through;
-    animation: forwards 100ms;
 }

@@ -51,10 +51,10 @@ document.querySelectorAll(".flexCheckDefault").forEach(item =>{
         finished = item.checked;
         toggle_task(id, finished)
         if (finished == true){
-            elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete")
+            elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
             alert(`Tarefa concluída.`);
         } else {
-            elementoTarefa.setAttribute("class", "form-check-label ml-3")
+            elementoTarefa.setAttribute("class", "form-check-label ml-3");
             alert(`Tarefa restaurada.`);
         }
     })
@@ -67,6 +67,7 @@ $(document).ready(function() {
     login_validation();
 
 })
+
 function login_validation() {
     if (getCookie('premium_access') == "") {
         alert('Usuário não logado. Redirecionando para a tela de login.');
