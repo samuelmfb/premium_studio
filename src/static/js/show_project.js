@@ -10,6 +10,7 @@ const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas
 btOcultarConcluidas.addEventListener("click", function(){
     if (btOcultarConcluidas.checked == true) {
         alert("Ocultou as tarefas concluidas");
+        document.querySelectorAll('.')
     } else {
         alert("Mostrou as tarefas concluidas");
     }
@@ -18,8 +19,14 @@ btOcultarConcluidas.addEventListener("click", function(){
 // Deletar tarefas:
 document.querySelectorAll(".bt-delete-task").forEach(item => {
     item.addEventListener("click", () => {
-        let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
-        alert(`Clicou para deletar a tarefa: ${nomeTarefa}`);
+        id = item
+                .parentNode
+                .parentNode
+                .parentNode
+                .id;
+        delete_task(id);
+        alert(`Tarefa excluída.`);
+        
     })
 });
 
@@ -27,10 +34,19 @@ document.querySelectorAll(".bt-delete-task").forEach(item => {
 document.querySelectorAll(".flexCheckDefault").forEach(item =>{
     item.addEventListener("click", () =>{
         let nomeTarefa = item.parentElement.querySelector("#taskName").textContent;
-        if (item.checked == true){
-            alert(`Concluiu a tarefa: ${nomeTarefa}`);
+        id = item
+                .parentNode
+                .parentNode
+                .parentNode
+                .parentNode
+                .parentNode
+                .id;
+        finished = item.checked;
+        toggle_task(id, finished)
+        if (finished == true){
+            alert(`Tarefa concluída.`);
         } else {
-            alert(`Restaurou a tarefa: ${nomeTarefa}`);
+            alert(`Tarefa restaurada.`);
         }
     })
 });
@@ -99,3 +115,69 @@ return "";
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+function add_task(id) {
+    window.location.replace(`/tarefa/${id}`);
+}
+
+function toggle_task(id, finished) {
+
+    data = { 
+        'id_task': id,
+        'finished': finished
+    }
+    $.ajax({
+        url : "/api/v1/task/toggle/",
+        type : 'post',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg, data){
+        console.log("ajax",response,msg); 
+   })
+   .fail(function(response, textStatus, msg){
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}
+
+
+function delete_task(id) {
+    $.ajax({
+        url : "/api/v1/task/" + id,
+        type : 'delete',
+        contentType: "application/json; charset=utf-8",
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg, data){
+        console.log("ajax",response,msg); 
+        window.location.reload();
+   })
+   .fail(function(response, textStatus, msg){
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}

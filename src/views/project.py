@@ -5,6 +5,7 @@ from src.controllers.customer import Customer
 from src.controllers.task import Task
 from src.controllers.project import Project
 #from controllers.user import handle_user
+from datetime import datetime
 
 project_views = Blueprint('project_views', __name__, template_folder='../templates')
 
@@ -43,31 +44,39 @@ def create_project_page():
 
 @project_views.route('/exibir_projeto/<id>', methods=['GET'])
 def show_project_page(id):
-    tasks = Task.query.filter_by(id_project = id).all()
-    
-    ts = []
-    if len(tasks) == 0:
-        return render_template('show_project.html', tasks = None)
-    for task in tasks:
-        checked = ""
-        if task.finished != None:
-            checked = "checked"
-        ts.append({
-            "id_task": task.id_task,
-            "checked": checked,
-            "title": task.title,
-            "description": task.description
-        })
-
     project = Project.query.filter_by(id_project = id).first()
     
     pj = {
         "name": project.name,
+        "id_project": project.id_project,
         "customer": project.customer.name,
         "producer": project.producer.name,
         "full_value": project.full_value,
         "description": project.description,
     }
+
+    tasks = Task.query.filter_by(id_project = id).all()
+    
+    ts = []
+    if len(tasks) == 0:
+        return render_template('show_project.html', project = pj, tasks = None)
+    for task in tasks:
+        checked = ""
+        if task.finished != None:
+            checked = "checked"
+
+        deadline = task.deadline
+        deadline = deadline.strftime("%d/%m/%Y")
+        #deadline = datetime.strptime(deadline, "%d/%m/%Y")
+        ts.append({
+            "id_task": task.id_task,
+            "checked": checked,
+            "title": task.title,
+            "deadline": deadline,
+            "description": task.description
+        })
+
+    
 
 
     return render_template('show_project.html', tasks = ts, project = pj)

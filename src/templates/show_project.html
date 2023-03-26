@@ -15,7 +15,7 @@
     <!-- Header -->
     <!-- jumbotron -->
     <div class="mb-4 bg-blue d-flex align-middle mt-5">
-        <div id="project" project="{{ id_project }}" class="container-fluid py-3 d-flex justify-content-around">
+        <div id="project" project="{{ project.id_project }}" class="container-fluid py-3 d-flex justify-content-around">
             <div class="col py-3 d-flex justify-content-start">
                 <a href="/projetos" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
             </div>
@@ -59,9 +59,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-start" data-toggle="tooltip"  title="{{ task.description }}">
+                        <div class="col d-flex justify-content-start" data-toggle="tooltip"  title="{{ task.description }} - Deadline: {{ task.deadline }}">
                             <p class="ml-5">{{ task.title }}</p>
                         </div>
+                        
                         <div class="col d-flex justify-content-end">
                             <button type="button" id="bt-delete-task" class="bt-delete-task btn btn-basic" data-toggle="tooltip"  title="Excluir tarefa"><i class="fa-regular fa-trash-can"></i></button>
                         </div>
@@ -73,7 +74,7 @@
     <div class="container">
         <div class="row d-flex justify-content-between align-items-center m-5">
             <div class="col d-flex justify-content-start p=0">
-                <button type="submit" id="bt-new-task" class="btn btn-basic" onclick="location.href='/tarefa/{{ id_project }}'"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
+                <button type="submit" id="bt-new-task" class="btn btn-basic" onclick="add_task({{ project.id_project }})"><i class="fa-solid fa-circle-plus"></i> Nova Tarefa</button>
             </div>
             <div class="col d-flex justify-content-end p=0">
                 <div class="switch form-check form-switch bg-light-blue switch">
