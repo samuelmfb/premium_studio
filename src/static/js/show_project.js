@@ -9,10 +9,18 @@ btNewTask.addEventListener("click", function(e) {
 const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas");
 btOcultarConcluidas.addEventListener("click", function(){
     if (btOcultarConcluidas.checked == true) {
-        alert("Ocultou as tarefas concluidas");
-        document.querySelectorAll('.')
+        document.querySelectorAll(".task-row").forEach(item => {
+            checked = item.querySelector('input').hasAttribute('checked');
+            if (checked) {
+                item.setAttribute("style", "display:none !important;")
+            }
+        });
+
     } else {
-        alert("Mostrou as tarefas concluidas");
+        
+        document.querySelectorAll(".task-row").forEach(item => {
+            item.setAttribute("style", "")
+        });
     }
 });
 
