@@ -24,7 +24,7 @@ button.addEventListener("click", function(e){
     .done(function(response, msg){
         console.log(response,msg);
         alert('Tarefa adicionada com sucesso!');
-        window.location.replace("/exibir_projeto");
+        window.location.replace("/exibir_projeto/" + project);
    })
    .fail(function(response, textStatus, msg){
 

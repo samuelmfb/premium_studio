@@ -8,4 +8,4 @@ class UserRole(db.Model):
     user_role_name = db.Column(db.String(80), unique = True, nullable = False)
 
     def __repr__(self) -> str:
-        return f'User>>>{self.role_name}'
+        return f'UserRole>>>{self.role_name}'

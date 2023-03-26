@@ -17,7 +17,7 @@
     <div class="mb-4 bg-blue d-flex align-middle mt-5">
         <div id="task" project="{{ id_project }}" class="container-fluid py-3 d-flex justify-content-around">
             <div class="col py-3 d-flex justify-content-start">
-                <a href="/exibir_projeto" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
+                <a href="/exibir_projeto/{{ id_project }}" style="margin-left : 3rem"><i class="fa-solid fa-circle-chevron-left fa-2x"></i></a>
             </div>
             <div class="col py-3 d-flex justify-content-center">
                 <h2>Nova Tarefa</h2>
@@ -38,7 +38,7 @@
             <!-- Deadline -->
             <div class="form-outline mb-4" style="width:350px">
                 <label class="form-label" for="deadline">Prazo Limite:</label>
-                <input type="text" id="deadline" class="form-control" />
+                <input type="text" id="deadline" placeholder="dd/mm/aaaa" class="form-control" />
             </div>
             <div class="form-group mb-3">
                 <label for="description">Descrição:</label>

@@ -13,28 +13,27 @@ task = Blueprint("task",__name__,url_prefix="/api/v1/task")
 def handle_task():
     current_user = get_jwt_identity()
     if request.method == "POST":
-        id_producer = request.get_json().get("id_producer", "")
         id_project = request.get_json().get("id_project", "")
         title = request.get_json().get("title", "")
         description = request.get_json().get("description", "")
         deadline = request.get_json().get("deadline", "")
-
+        started = datetime.now()
         if deadline:
             deadline = datetime.strptime(deadline, '%d/%m/%Y').date()
         else:
             deadline = None
 
-        if Task.query.filter_by(id_project = id_project, id_producer = id_producer, deadline=deadline).first():
+        if Task.query.filter_by(title = title, id_project = id_project).first():
             return jsonify({
                 "error": "A tarefa já existe."
             }), HTTP_409_CONFLICT
 
         task = Task(
-            id_producer = id_producer, 
             id_project = id_project,
             description = description,
             deadline = deadline,
-            title = title
+            title = title,
+            started = started
         )
 
         db.session.add(task)
@@ -167,6 +166,27 @@ def delete_task(id):
             "message": "Item não encontrado."
         })
     db.session.delete(task)
+    db.session.commit()
+
+    return jsonify({}), HTTP_204_NO_CONTENT
+
+@task.post("/toggle/")
+@jwt_required()
+def toggle_task():
+    id_task = request.get_json().get("id_task", "")
+    finished = request.get_json().get("finished", "")
+    task = Task.query.filter_by(id_task=id_task).first()
+    if not task:
+        return jsonify({
+            "message": "Item não encontrado."
+        })
+    if finished:
+        finished = datetime.now()
+    else:
+        finished = None    
+
+    task.finished = finished
+
     db.session.commit()
 
     return jsonify({}), HTTP_204_NO_CONTENT
