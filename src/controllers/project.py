@@ -87,7 +87,7 @@ def get_project(id):
 
 @project.get("/customer/<int:id>")
 @jwt_required()
-def get_project_by_customer(id):
+def list_projects_by_customer(id):
     projects = Project.query.filter_by(id_customer=id).all()
     if not projects:
         return jsonify({

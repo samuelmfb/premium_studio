@@ -91,7 +91,7 @@ def get_task(id):
 
 @task.get("/project/<int:id>")
 @jwt_required()
-def get_task_by_project(id):
+def list_tasks_by_project(id):
     tasks = Task.query.filter_by(id_project = id).all()
     
     data = []
