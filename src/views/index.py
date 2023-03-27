@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from src.database import db
+from src.init_db import init_db
 #from controllers.user import handle_user
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
@@ -28,6 +29,7 @@ def permissions_page():
 def init():
     db.drop_all()
     db.create_all()
+    init_db()
     #handle_user('bob', 'bobpass')
     return jsonify(message='db initialized!')
 
