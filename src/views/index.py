@@ -29,9 +29,9 @@ def permissions_page():
 def init():
     db.drop_all()
     db.create_all()
-    init_db()
+    response_db = init_db()
     #handle_user('bob', 'bobpass')
-    return jsonify(message='db initialized!')
+    return jsonify(message=response_db)
 
 @index_views.route('/health', methods=['GET'])
 def health_check():

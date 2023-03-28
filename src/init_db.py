@@ -43,30 +43,34 @@ def init_db():
             ("Gravar solo de guitarra", "2023-04-03", "Usar bastante distorção", 1),
     ]
 
-    cur = connection.cursor()
-    cur.execute("delete from user_role")
-    cur.execute("delete from user")
-    cur.execute("delete from customer")
-    cur.execute("delete from producer")
-    cur.execute("delete from project")
-    cur.execute("delete from task")
-    for data in roles: 
-        cur.execute(f"INSERT INTO user_role (user_role_name) VALUES ('{data}')")
-    for data in users: 
-        cur.execute(f"INSERT INTO user (user_name, email, password, id_user_role) \
-                    VALUES ('{data[0]}','{data[1]}','{generate_password_hash(data[2])}',{data[3]})")
-    for data in producers: 
-        cur.execute(f"INSERT INTO producer (name,area) \
-                    VALUES ('{data[0]}','{data[1]}')")
-    for data in customers: 
-        cur.execute(f"INSERT INTO customer (name,email,phone_num) \
-                    VALUES ('{data[0]}','{data[1]}', '{data[2]}')")
-    for data in projects: 
-        cur.execute(f"INSERT INTO project (description,full_value,id_customer,id_producer, name) \
-                    VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]}, '{data[4]}')") 
-    for data in tasks:
-        cur.execute(f"INSERT INTO task (title,deadline,description,id_project) \
-                    VALUES ('{data[0]}','{data[1]}', '{data[2]}', {data[3]})")
+    try:
+        cur = connection.cursor()
+        cur.execute("delete from user_role")
+        cur.execute("delete from user")
+        cur.execute("delete from customer")
+        cur.execute("delete from producer")
+        cur.execute("delete from project")
+        cur.execute("delete from task")
+        for data in roles: 
+            cur.execute(f"INSERT INTO user_role (user_role_name) VALUES ('{data}')")
+        for data in users: 
+            cur.execute(f"INSERT INTO user (user_name, email, password, id_user_role) \
+                        VALUES ('{data[0]}','{data[1]}','{generate_password_hash(data[2])}',{data[3]})")
+        for data in producers: 
+            cur.execute(f"INSERT INTO producer (name,area) \
+                        VALUES ('{data[0]}','{data[1]}')")
+        for data in customers: 
+            cur.execute(f"INSERT INTO customer (name,email,phone_num) \
+                        VALUES ('{data[0]}','{data[1]}', '{data[2]}')")
+        for data in projects: 
+            cur.execute(f"INSERT INTO project (description,full_value,id_customer,id_producer, name) \
+                        VALUES ('{data[0]}','{data[1]}', {data[2]}, {data[3]}, '{data[4]}')") 
+        for data in tasks:
+            cur.execute(f"INSERT INTO task (title,deadline,description,id_project) \
+                        VALUES ('{data[0]}','{data[1]}', '{data[2]}', {data[3]})")
 
-    connection.commit()
-    connection.close()
+        connection.commit()
+        connection.close()
+        return "DB inicializado com sucesso!"
+    except Exception as erro:
+        return f"Erro inicializando o db: {erro}"
