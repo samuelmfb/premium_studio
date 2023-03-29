@@ -13,15 +13,15 @@ def handle_user_role():
     current_user = get_jwt_identity()
     if request.method == "POST":
         id_user_role = request.get_json().get("id_user_role", "")
-        user_role_name = request.get_json().get("user_role_name", "")
+        user_role = request.get_json().get("user_role", "")
 
-        if UserRole.query.filter_by(user_role_name=user_role_name).first():
+        if UserRole.query.filter_by(user_role=user_role).first():
             return jsonify({
                 "error": "Papel já existe."
             }), HTTP_409_CONFLICT
 
         user_role = UserRole(
-            user_role_name = user_role_name
+            user_role = user_role
         )
 
         db.session.add(user_role)
@@ -29,7 +29,7 @@ def handle_user_role():
 
         return jsonify({
             "id_user_role": user_role.id_user_role,
-            "user_role_name": user_role.user_role_name
+            "user_role": user_role.user_role
         }), HTTP_201_CREATED
     
     else:
@@ -41,7 +41,7 @@ def handle_user_role():
         for user_role in user_roles.items:
             data.append({
                 "id_user_role": user_role.id_user_role,
-                "user_role_name": user_role.user_role_name
+                "user_role": user_role.user_role
             })
         meta = {
             "page": user_roles.page,
@@ -67,7 +67,7 @@ def get_user_role(id):
         })
     return jsonify({
         "id_user_role": user_role.id_user_role,
-        "user_role_name": user_role.user_role_name
+        "user_role": user_role.user_role
     }), HTTP_200_OK
 
 @user_role.put("/<int:id>")
@@ -80,15 +80,15 @@ def edit_user_role(id):
             "message": "Item não encontrado."
         })
     
-    user_role_name = request.get_json().get("user_role_name", "")
+    user_role = request.get_json().get("user_role", "")
 
-    user_role.user_role_name = user_role_name
+    user_role.user_role = user_role
 
     db.session.commit()
 
     return jsonify({
         "id_user_role": user_role.id_user_role,
-        "user_role_name": user_role.user_role_name
+        "user_role": user_role.user_role
     }), HTTP_201_CREATED
 
 @user_role.delete("/<int:id>")

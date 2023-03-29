@@ -4,6 +4,7 @@ import validators
 from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
 from src.database import db
 from src.models.producer import Producer
+from src.models.user import User
 from flask_jwt_extended import get_jwt_identity, jwt_required
 producer = Blueprint("producer",__name__,url_prefix="/api/v1/producer")
 
@@ -108,3 +109,25 @@ def delete_producer(id):
     db.session.commit()
 
     return jsonify({}), HTTP_204_NO_CONTENT
+
+@producer.post("/user_producer")
+@jwt_required()
+def new_user_producer(id):
+    user = Producer.query.filter_by(id_user=id).first()
+    if not user:
+        return jsonify({
+            "message": "Usuário não encontrado."
+        })
+
+    producer = Producer(
+            name = user.user_name, 
+            area = "Produção"
+        )
+
+    db.session.add(producer)
+    db.session.commit()
+
+    return jsonify({
+        "id": producer.id_producer,
+        "name": producer.name
+    }), HTTP_201_CREATED

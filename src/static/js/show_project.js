@@ -25,7 +25,7 @@ document.querySelectorAll(".bt-delete-task").forEach(item => {
                 .parentNode
                 .id;
         delete_task(id);
-        alert(`Tarefa excluída.`);
+        
 
     })
 });
@@ -34,21 +34,25 @@ document.querySelectorAll(".bt-delete-task").forEach(item => {
 document.querySelectorAll(".flexCheckDefault").forEach(item =>{
     item.addEventListener("click", () =>{
         let elementoTarefa = item.parentElement.querySelector("#taskName");
-        id = item
+        console.log(elementoTarefa)
+        row = item
                 .parentNode
                 .parentNode
                 .parentNode
                 .parentNode
-                .parentNode
-                .id;
+                .parentNode;
+        id = row.id;
+        text = row.querySelector('.tachado');
         finished = item.checked;
         toggle_task(id, finished)
         if (finished == true){
-            elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
-            alert(`Tarefa concluída.`);
+            // elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
+            text.classList.toggle('checked');
+            // alert(`Tarefa concluída.`);
         } else {
-            elementoTarefa.setAttribute("class", "form-check-label ml-3");
-            alert(`Tarefa restaurada.`);
+            // elementoTarefa.setAttribute("class", "form-check-label ml-3");
+            text.classList.toggle('checked');
+            // alert(`Tarefa restaurada.`);
         }
     })
 });
@@ -166,6 +170,7 @@ function delete_task(id) {
    })
     .done(function(response, msg, data){
         console.log("ajax",response,msg);
+        alert(response['message'])
         window.location.reload();
    })
    .fail(function(response, textStatus, msg){
@@ -184,3 +189,13 @@ function delete_task(id) {
         }
     });
 }
+
+$('.round').on("click", function(event) {
+    // Do something here
+    event.stopPropagation();
+});
+
+$('.bt-delete-task').on("click", function(event) {
+    // Do something here
+    event.stopPropagation();
+});

@@ -4,6 +4,7 @@ import validators
 from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
 from src.database import db
 from src.models.task import Task
+from src.models.user import User
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity, jwt_required
 task = Blueprint("task",__name__,url_prefix="/api/v1/task")
@@ -85,7 +86,7 @@ def get_task(id):
             "message": "Item não encontrado."
         })
     return jsonify({
-        "id": task.id,
+        "id": task.id_task,
         "description": task.description
     }), HTTP_200_OK
 
@@ -143,7 +144,7 @@ def edit_task(id):
     if description:
         task.description = description
     if deadline:
-        deadline = datetime.strptime(deadline, '%Y-%m-%d').date()
+        deadline = datetime.strptime(deadline, '%d/%m/%Y').date()
         task.deadline = deadline
     if finished:
         task.finished = finished
@@ -160,6 +161,12 @@ def edit_task(id):
 @task.delete("/<int:id>")
 @jwt_required()
 def delete_task(id):
+    id_user = get_jwt_identity()
+    user = User.query.filter_by(id_user = id_user).first()
+    if user.user_role != "Gerente":
+        return jsonify({
+            "message": "Usuário não possui privilégio de acesso para excluir tarefas."
+        })
     task = Task.query.filter_by(id_task=id).first()
     if not task:
         return jsonify({
@@ -168,7 +175,7 @@ def delete_task(id):
     db.session.delete(task)
     db.session.commit()
 
-    return jsonify({}), HTTP_204_NO_CONTENT
+    return jsonify({"message" : "Tarefa excluída."}), HTTP_204_NO_CONTENT
 
 @task.post("/toggle/")
 @jwt_required()

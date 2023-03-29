@@ -52,7 +52,7 @@ def init_db():
         cur.execute("delete from project")
         cur.execute("delete from task")
         for data in roles: 
-            cur.execute(f"INSERT INTO user_role (user_role_name) VALUES ('{data}')")
+            cur.execute(f"INSERT INTO user_role (user_role) VALUES ('{data}')")
         for data in users: 
             cur.execute(f"INSERT INTO user (user_name, email, password, id_user_role) \
                         VALUES ('{data[0]}','{data[1]}','{generate_password_hash(data[2])}',{data[3]})")

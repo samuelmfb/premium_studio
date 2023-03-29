@@ -161,3 +161,23 @@ visibility: hidden;
 .task-complete {
     text-decoration: line-through;
 }
+
+.tachado {
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+  }
+.tachado:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: white;
+    transition: clip-path 1s ease-in-out;
+    clip-path: inset(0 100% 0 0);
+}
+.tachado.checked:before {
+    clip-path: inset(0 0 0 0);
+}
