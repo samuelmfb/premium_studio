@@ -10,7 +10,7 @@ button.addEventListener("click", function(e){
     const email = document.getElementById('email').value;
     data = {
         "name": name,
-        "phone_num" : name,
+        "phone_num" : phone_num,
         "email" : email
     }
     $.ajax({
