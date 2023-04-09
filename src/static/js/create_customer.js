@@ -22,7 +22,7 @@ button.addEventListener("click", function(e){
    })
     .done(function(response, msg){
         console.log(response,msg);
-        alert('Registro adicionado com sucesso!');
+        alert('Novo cliente adicionado com sucesso!');
         location.reload();
    })
    .fail(function(response, textStatus, msg){

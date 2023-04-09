@@ -77,7 +77,7 @@ function update_task(id) {
    })
     .done(function(response, msg){
         console.log(response,msg);
-        alert('Registro atualizado com sucesso!');
+        alert('Tarefa atualizada com sucesso!');
         location.reload();
    })
    .fail(function(response, textStatus, msg){
