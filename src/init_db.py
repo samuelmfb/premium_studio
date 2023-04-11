@@ -8,6 +8,7 @@ connection = sqlite3.connect(db_path, check_same_thread=False)
 def init_db():
     users  = [
             ("teste", "teste@teste.com", "senhateste", "2"),
+            ("professor", "professor@pucminas.com", "professorpucminas", "1"),
             ("samuel", "samuel@teste.com", "senhateste", "1"),
             ("glauber", "glauber@teste.com", "senhateste", "1"),
         ]
@@ -20,27 +21,39 @@ def init_db():
     ]
 
     customers  = [
-            ("Kylie Minogue", "kylie@teste.com", "000555333"),
+            ("Hospital Saúde", "hospital@teste.com", "000555333"),
             ("Vereador Paulinho", "vp@teste.com", "999333000"),
-            ("ACDC", "acdc@teste.com", "987654321"),
+            ("Gustavo Sertanejo", "sertanejo@teste.com", "987654321"),
+            ("Motor Rock", "rock@teste.com", "987654322"),
         ]
 
     producers  = [
-            ("Mark Ronson", "Gravação"),
-            ("Pharrell Williams", "Afinação"),
-            ("Will.I.Am", "Produção Musical"),
+            ("Flávio Marcos", "Gravação"),
+            ("Leonardo Lanny", "Mixagem"),
+            ("Bernardo Oliveira", "Produção Musical"),
+            ("Samuel Marques", "Afinação")
         ]
 
     projects  = [
-            ("Álbum Kylie Minogue", "120000.00", "1", "1", 'Kylie on Acid'),
-            ("Jingle de Campanha", "15000.00", "2", "2", 'Caixa 2 do Partido'),
-            ("Remix de Thunderstorm", "20000.00", "3", "3", 'Trovão do amor'),
+            ("Música Tema de Fim de Ano", "12000.00", "1", "1", 'Fim de Ano Hospital'),
+            ("Jingle de Campanha", "15000.00", "2", "2", 'Candidatura Vereador Paulinho'),
+            ("Album Motor Rock", "25000.00", "3", "3", 'Album Motor Rock'),
+            ("Novo Single de Gustavo Sertanejo", "10000.00", "4", "4", 'Single Gustavo'),
         ]
 
     tasks = [ 
-            ("Afinar voz", "2023-04-03", "Cuidado com o refrão", 1),
-            ("Preparar beat", "2023-04-03", "Deixar o groove bem animado", 1),
-            ("Gravar solo de guitarra", "2023-04-03", "Usar bastante distorção", 1),
+            ("Escrever a letra", "2023-05-03", "Focar nas coisas boas do ano", 1),
+            ("Preparar harmonia", "2023-05-09", "Preparar com um clima bem animado", 1),
+            ("Gravar rascunho para apresentar", "2023-05-13", "Manter a guia da voz e o instrumental simples", 1),
+            ("Preparar o beat", "2023-05-04", "Cliente solicitou no estilo Pisadinha", 2),
+            ("Compor a letra", "2023-05-08", "Focar em *Paulinho 23456, agora é nossa vez*", 2),
+            ("Gravar os trompetes", "2023-05-13", "Manter a melodia simples", 2),
+            ("Gravar os instrumentos", "2023-05-13", "Deixar o estúdio preparado para a bateria", 3),
+            ("Editar a gravação", "2023-05-20", "Atenção com a música 3", 3),
+            ("Gravar solo de guitarra", "2023-05-22", "Usar bastante distorção", 3),
+            ("Gravar o vocal", "2023-04-03", "Cuidado com o refrão", 4),
+            ("Afinar a voz", "2023-04-03", "Atenção nas notas agudas", 4),
+            ("Mixar e masterizar", "2023-04-03", "Manter a sanfona aparecendo bastante nas faixas", 4),
     ]
 
     try:

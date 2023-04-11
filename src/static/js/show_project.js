@@ -43,15 +43,19 @@ document.querySelectorAll(".flexCheckDefault").forEach(item =>{
                 .parentNode;
         id = row.id;
         text = row.querySelector('.tachado');
+        input = row.querySelector('input');
+        
         finished = item.checked;
-        toggle_task(id, finished)
+        toggle_task(id, finished);
         if (finished == true){
             // elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
             text.classList.toggle('checked');
+            input.setAttribute('checked', '');
             // alert(`Tarefa concluída.`);
         } else {
             // elementoTarefa.setAttribute("class", "form-check-label ml-3");
             text.classList.toggle('checked');
+            input.removeAttribute('checked');
             // alert(`Tarefa restaurada.`);
         }
     })
