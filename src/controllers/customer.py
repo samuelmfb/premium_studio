@@ -110,7 +110,7 @@ def edit_customer(id):
     return jsonify({
         "id_customer": customer.id_customer,
         "name": customer.name
-    }), HTTP_201_CREATED
+    }), HTTP_200_OK
 
 @customer.delete("/<int:id>")
 @jwt_required()

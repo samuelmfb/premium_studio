@@ -144,7 +144,7 @@ def edit_project(id):
     return jsonify({
         "id": project.id_project,
         "name": project.name
-    }), HTTP_201_CREATED
+    }), HTTP_200_OK
 
 @project.delete("/<int:id>")
 @jwt_required()

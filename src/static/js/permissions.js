@@ -3,6 +3,7 @@ const search = document.getElementById("search");
 
 
 
+
 $(document).ready(function() {
     login_validation();
 });
@@ -129,26 +130,59 @@ function check_option(item) {
         .parentNode
         .id;
     option = item.value;
-    // create new producer
-    if (option == 2){
+    if (option == 3){
+        // create new producer
         create_producer(id);
-    }
-    // 
+    } 
+    //change user role
+    change_role(id, option);
 }
 
 function create_producer(id) {
     data = {"id_user": id };
+    alert(id)
     $.ajax({
         url : "/api/v1/producer/user_producer",
         type : 'post',
+        async: false,
+        data : JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg){
+        console.log("produtor criado",response,msg);
+   })
+   .fail(function(response, textStatus, msg){
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}
+
+
+function change_role(id_user, id_user_role) {
+    data = {"id_user": id_user, "id_user_role": id_user_role };
+    $.ajax({
+        url : `/api/v1/user/${id_user}`,
+        type : 'put',
         data : JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         headers: {"Authorization": "Bearer " + getCookie('premium_access')}
    })
     .done(function(response, msg){
         console.log(response,msg);
-        alert('Registro adicionado com sucesso!');
-        location.reload();
+        alert('Registro atualizado com sucesso!');
+        //location.reload();
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){ 

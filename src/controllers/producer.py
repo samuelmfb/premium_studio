@@ -95,7 +95,7 @@ def edit_producer(id):
     return jsonify({
         "id_producer": producer.id_producer,
         "name": producer.name
-    }), HTTP_201_CREATED
+    }), HTTP_200_OK
 
 @producer.delete("/<int:id>")
 @jwt_required()
@@ -112,8 +112,9 @@ def delete_producer(id):
 
 @producer.post("/user_producer")
 @jwt_required()
-def new_user_producer(id):
-    user = Producer.query.filter_by(id_user=id).first()
+def new_user_producer():
+    id = request.get_json().get("id_user", "")
+    user = User.query.filter_by(id_user=id).first()
     if not user:
         return jsonify({
             "message": "Usuário não encontrado."

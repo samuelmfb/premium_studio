@@ -156,7 +156,7 @@ def edit_task(id):
     return jsonify({
         "id": task.id_task,
         "name": task.description
-    }), HTTP_201_CREATED
+    }), HTTP_200_OK
 
 @task.delete("/<int:id>")
 @jwt_required()

@@ -7,10 +7,9 @@ connection = sqlite3.connect(db_path, check_same_thread=False)
 
 def init_db():
     users  = [
-            ("teste", "teste@teste.com", "senhateste", "2"),
-            ("professor", "professor@pucminas.com", "professorpucminas", "1"),
-            ("samuel", "samuel@teste.com", "senhateste", "1"),
-            ("glauber", "glauber@teste.com", "senhateste", "1"),
+            ("Professor", "professor@pucminas.com", "professorpucminas", "1"),
+            ("Samuel", "samuel@teste.com", "senhateste", "1"),
+            ("Glauber", "glauber@teste.com", "senhateste", "1"),
         ]
 
     roles  = [

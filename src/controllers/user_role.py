@@ -89,7 +89,7 @@ def edit_user_role(id):
     return jsonify({
         "id_user_role": user_role.id_user_role,
         "user_role": user_role.user_role
-    }), HTTP_201_CREATED
+    }), HTTP_200_OK
 
 @user_role.delete("/<int:id>")
 @jwt_required()
