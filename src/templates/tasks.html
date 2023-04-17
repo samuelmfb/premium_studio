@@ -60,5 +60,20 @@
     src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
     crossorigin="anonymous"></script>
+<!-- Datepicker para o prazo limite -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.0/i18n/datepicker-pt-BR.min.js"></script>
+<script>
+    $( function() {
+    $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+      $( "#deadline" ).datepicker({
+            dateFormat: 'dd/mm/yy',
+            showAnim: "slideDown"
+        });
+    } );
+</script>
+
 <script src="/static/js/tasks.js"></script>
 </html>
