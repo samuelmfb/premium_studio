@@ -36,7 +36,7 @@ def handle_producer():
     
     else:
         page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 5, type=int)
+        per_page = request.args.get('per_page', 50, type=int)
         producers = Producer.query.paginate(page=page, per_page=per_page)
         
         data = []
@@ -132,3 +132,22 @@ def new_user_producer():
         "id": producer.id_producer,
         "name": producer.name
     }), HTTP_201_CREATED
+
+@producer.post("/delete_user_producer")
+def delete_user_producer():
+    id = request.get_json().get("id_user", "")
+    user = User.query.filter_by(id_user=id).first()
+    if not user:
+        return jsonify({
+            "message": "Usuário não encontrado."
+        })
+    producer = Producer.query.filter_by(name=user.user_name).first()
+    if not producer:
+        return jsonify({
+            "message": "Produtor não encontrado."
+        })
+
+    db.session.delete(producer)
+    db.session.commit()
+
+    return jsonify({}), HTTP_204_NO_CONTENT

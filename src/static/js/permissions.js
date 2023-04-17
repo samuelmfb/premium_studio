@@ -104,9 +104,9 @@ function search_user() {
     var users = document.getElementsByClassName("user");
     let search_text = ""; 
     search_text = search.value;
-    console.log(search_text)
     search_length = search_text.length;
     for (var i = 0; i < users.length; i++) {
+        users[i].setAttribute("style", "");
         let user = users[i].innerText.split('\n')[0];
         console.log("oculto:",users[2])
         if (user.trim().substring(0,search_length) != search_text) {
@@ -133,14 +133,15 @@ function check_option(item) {
     if (option == 3){
         // create new producer
         create_producer(id);
-    } 
+    } else {
+        delete_producer(id);
+    }
     //change user role
     change_role(id, option);
 }
 
 function create_producer(id) {
     data = {"id_user": id };
-    alert(id)
     $.ajax({
         url : "/api/v1/producer/user_producer",
         type : 'post',
@@ -151,6 +152,36 @@ function create_producer(id) {
    })
     .done(function(response, msg){
         console.log("produtor criado",response,msg);
+   })
+   .fail(function(response, textStatus, msg){
+        if ('msg'in response['responseJSON']){ 
+            msg = response['responseJSON']['msg'];
+            if (msg == 'Token has expired') {
+                alert('Token expirou. Redirecionando para a tela de login.');
+                window.location.replace("/login");
+            };
+        } 
+        if ('error'in response['responseJSON']){
+            const error = response['responseJSON']['error'];
+            if (error) {
+                alert(error);
+            };
+        }
+    });
+}
+
+function delete_producer(id) {
+    data = {"id_user": id };
+    $.ajax({
+        url : "/api/v1/producer/delete_user_producer",
+        type : 'post',
+        async: false,
+        data : JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+   })
+    .done(function(response, msg){
+        console.log("produtor deletado",response,msg);
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){ 
