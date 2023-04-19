@@ -2,14 +2,20 @@ const button = document.getElementById("bt-submit");
 
 $(document).ready(function() {
     login_validation();
+    $('#full_value').mask('000.000.000,00', {reverse: true});
 })
 button.addEventListener("click", function(e){
     e.preventDefault();
     const name = document.getElementById('name').value;
-    const full_value = document.getElementById('full_value').value;
+    let full_value = document.getElementById('full_value').value;
     const producer = Number(document.getElementById('producer').value);
     const customer = Number(document.getElementById('customer').value);
     const description = document.getElementById('description').value;
+    
+    full_value = full_value.replace(/[.]/g, '');
+    full_value = full_value.replace(/[,]/g, '.')
+    full_value = Number(full_value);
+    
     data = {
         "name": name,
         "full_value" : full_value,
