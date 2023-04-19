@@ -13,7 +13,7 @@ button.addEventListener("click", function(e){
     const description = document.getElementById('description').value;
     
     full_value = full_value.replace(/[.]/g, '');
-    full_value = full_value.replace(/[,]/g, '.')
+    full_value = full_value.replace(/[,]/g, '.');
     full_value = Number(full_value);
     
     data = {
