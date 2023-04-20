@@ -166,32 +166,35 @@ function toggle_task(id, finished) {
 
 
 function delete_task(id) {
-    $.ajax({
-        url : "/api/v1/task/" + id,
-        type : 'delete',
-        contentType: "application/json; charset=utf-8",
-        headers: {"Authorization": "Bearer " + getCookie('premium_access')}
-   })
-    .done(function(response, msg, data){
-        console.log("ajax",response,msg);
-        alert(response['message'])
-        window.location.reload();
-   })
-   .fail(function(response, textStatus, msg){
-        if ('msg'in response['responseJSON']){
-            msg = response['responseJSON']['msg'];
-            if (msg == 'Token has expired') {
-                alert('Token expirou. Redirecionando para a tela de login.');
-                window.location.replace("/login");
-            };
-        }
-        if ('error'in response['responseJSON']){
-            const error = response['responseJSON']['error'];
-            if (error) {
-                alert(error);
-            };
-        }
-    });
+    let deleteConfirm = confirm('Deseja realmente excluir a tarefa?');
+    if(deleteConfirm){ 
+        $.ajax({
+            url : "/api/v1/task/" + id,
+            type : 'delete',
+            contentType: "application/json; charset=utf-8",
+            headers: {"Authorization": "Bearer " + getCookie('premium_access')}
+    })
+        .done(function(response, msg, data){
+            console.log("ajax",response,msg);
+            alert("Tarefa excluída com sucesso")
+            window.location.reload();
+    })
+    .fail(function(response, textStatus, msg){
+            if ('msg'in response['responseJSON']){
+                msg = response['responseJSON']['msg'];
+                if (msg == 'Token has expired') {
+                    alert('Token expirou. Redirecionando para a tela de login.');
+                    window.location.replace("/login");
+                };
+            }
+            if ('error'in response['responseJSON']){
+                const error = response['responseJSON']['error'];
+                if (error) {
+                    alert(error);
+                };
+            }
+        });
+    };
 }
 
 $('.round').on("click", function(event) {
