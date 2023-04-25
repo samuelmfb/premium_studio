@@ -55,7 +55,7 @@ def handle_user():
             
             data.append({
                 "id_user": user.id_user,
-                "user_role": user.user_role.user_role.user_role,
+                "user_role": user.user_role.user_role,
                 "user_name": user.user_name,
                 "email": user.email,
                 "password": user.password,

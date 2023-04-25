@@ -163,7 +163,8 @@ def edit_task(id):
 def delete_task(id):
     id_user = get_jwt_identity()
     user = User.query.filter_by(id_user = id_user).first()
-    if user.user_role != "Gerente":
+    
+    if user.user_role.user_role != "Gerente":
         return jsonify({
             "message": "Usuário não possui privilégio de acesso para excluir tarefas."
         })
