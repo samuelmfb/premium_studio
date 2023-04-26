@@ -8,6 +8,11 @@ button.addEventListener("click", function(e){
     const title = document.getElementById('title').value;
     const deadline = document.getElementById('deadline').value;
     const description = document.getElementById('description').value;
+
+    if (title.length == 0) {
+        alert("Título da tarefa não pode estar em branco.");
+        return false;
+    }
     data = {
         "title": title,
         "deadline" : deadline,
