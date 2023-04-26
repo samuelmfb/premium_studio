@@ -22,18 +22,18 @@ $(document).ready(function() {
         } else {
             projects.push(response)
         }
-        for (project in projects) {
-            if (project == 0){
-                html = "<h5>Sem projetos cadastrados para este cliente.</h5>"
-                break
+        console.log(projects)
+        if ('message' in projects[0]){
+            html = "<h5>Sem projetos cadastrados para este cliente.</h5>"
+        } else {
+            for (project in projects) {
+                id = projects[project]['id_project'];
+                html += "<div id='" + id +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ id+")' > \
+                    <p class='m-3'>" + projects[project]['name']+ "</p> \
+                </div>"
             }
-            id = projects[project]['id_project'];
-            html += "<div id='" + id +"' class='container-md bg-light-blue d-flex justify-content-between align-content-center ml-0 mb-3' onclick='show_project("+ id+")' > \
-                <p class='m-3'>" + projects[project]['name']+ "</p> \
-            </div>"
         }
         list.innerHTML = html;   
-        
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){ 
