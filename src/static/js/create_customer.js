@@ -8,6 +8,12 @@ button.addEventListener("click", function(e){
     const name = document.getElementById('name').value;
     const phone_num = document.getElementById('phone_num').value;
     const email = document.getElementById('email').value;
+    
+    const input_lengths = [name.length, phone_num.length, email.length];
+    if (input_lengths.some(item => item == 0)){
+        alert("Existe campo em branco. Preencha todos os campos.");
+        return false;
+    }
     data = {
         "name": name,
         "phone_num" : phone_num,

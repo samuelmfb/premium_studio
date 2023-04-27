@@ -185,3 +185,8 @@ visibility: hidden;
 .ui-state-default { 
     color: black !important;
 }
+
+.incorrect-input {
+    border: 2px solid red !important;
+}
+

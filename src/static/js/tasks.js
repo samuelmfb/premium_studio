@@ -5,12 +5,25 @@ $(document).ready(function() {
 })
 button.addEventListener("click", function(e){
     e.preventDefault();
+    const dateStandard = /^\d{2}\/\d{2}\/\d{4}$/;
     const title = document.getElementById('title').value;
     const deadline = document.getElementById('deadline').value;
     const description = document.getElementById('description').value;
 
     if (title.length == 0) {
-        alert("Título da tarefa não pode estar em branco.");
+        alert("Preencha o título da tarefa.");
+        document.getElementById('title').classList.add("incorrect-input");
+        setTimeout(function(){
+            document.getElementById('title').classList.remove("incorrect-input");
+        }, 10000);
+        return false;
+    }
+    if (dateStandard.test(deadline) == false) {
+        alert("Selecione o prazo limite.");
+        document.getElementById('deadline').classList.add("incorrect-input");
+        setTimeout(function(){
+            document.getElementById('deadline').classList.remove("incorrect-input");
+        }, 10000);
         return false;
     }
     data = {

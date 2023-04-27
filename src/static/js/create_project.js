@@ -12,6 +12,20 @@ button.addEventListener("click", function(e){
     const customer = Number(document.getElementById('customer').value);
     const description = document.getElementById('description').value;
     
+    const input_lengths = [name.length, full_value.length, description.length];
+    if (input_lengths.some(item => item == 0)){
+        alert("Existe campo em branco. Preencha todos os campos.");
+        return false;
+    }
+    if (Number.isInteger(producer) == false){
+        alert("Selecione um Produtor.");
+        return false;
+    }
+    if (Number.isInteger(customer) == false){
+        alert("Selecione um Cliente.");
+        return false;
+    } 
+
     full_value = full_value.replace(/[.]/g, '');
     full_value = full_value.replace(/[,]/g, '.');
     full_value = Number(full_value);

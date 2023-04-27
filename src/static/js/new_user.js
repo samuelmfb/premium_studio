@@ -5,6 +5,12 @@ buttonRegister.addEventListener("click", function(e){
     const user_name = document.getElementById('user_name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+
+    const input_lengths = [user_name.length, email.length, password.length];
+    if (input_lengths.some(item => item == 0)){
+        alert("Existe campo em branco. Preencha todos os campos.");
+        return false;
+    }
     data = {
         "user_name": user_name,
         "email" : email,
