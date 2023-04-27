@@ -166,7 +166,7 @@ def delete_task(id):
     
     if user.user_role.user_role != "Gerente":
         return jsonify({
-            "message": "Usuário não possui privilégio de acesso para excluir tarefas."
+            "message": "Usuário não possui privilégio de acesso para excluir tarefas. Altere seu papel para Gerente se deseja excluir tarefa."
         })
     task = Task.query.filter_by(id_task=id).first()
     if not task:

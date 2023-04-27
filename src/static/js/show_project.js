@@ -176,7 +176,7 @@ function delete_task(id) {
     })
         .done(function(response, msg, data){
             console.log("ajax",response,msg);
-            alert("Tarefa excluída com sucesso")
+            alert(response['message'])
             window.location.reload();
     })
     .fail(function(response, textStatus, msg){
