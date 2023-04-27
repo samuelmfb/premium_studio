@@ -176,7 +176,11 @@ function delete_task(id) {
     })
         .done(function(response, msg, data){
             console.log("ajax",response,msg);
-            alert(response['message'])
+            if (msg == "nocontent"){
+                alert("Tarefa excluída com sucesso.");
+            } else {
+                alert(`Não foi possível excluir a tarefa:\n${response['message']}`);
+            }
             window.location.reload();
     })
     .fail(function(response, textStatus, msg){
