@@ -100,6 +100,14 @@ def get_user(id):
 @user.patch("/<int:id>")
 @jwt_required()
 def edit_user(id):
+    id_user_update = get_jwt_identity()
+    user_update = User.query.filter_by(id_user = id_user_update).first()
+    
+    if user_update.user_role.user_role != "Gerente":
+        return jsonify({
+            "message": "Usuário não possui permissão para alterar privilégios de acesso."
+        })
+    
     user = User.query.filter_by(id_user=id).first()
     if not user:
         return jsonify({

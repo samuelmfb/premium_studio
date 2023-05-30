@@ -166,7 +166,7 @@ def delete_task(id):
     
     if user.user_role.user_role != "Gerente":
         return jsonify({
-            "message": "Usuário não possui privilégio de acesso para excluir tarefas. Altere seu papel para Gerente se deseja excluir tarefa."
+            "message": "Usuário não possui privilégio de acesso para excluir tarefas."
         })
     task = Task.query.filter_by(id_task=id).first()
     if not task:
@@ -181,6 +181,13 @@ def delete_task(id):
 @task.post("/toggle/")
 @jwt_required()
 def toggle_task():
+    id_user = get_jwt_identity()
+    user = User.query.filter_by(id_user = id_user).first()
+    if user.user_role.user_role not in ("Gerente", "Produtor"):
+        return jsonify({
+            "message": "Usuário não possui privilégio de acesso para concluir tarefas."
+        })
+    
     id_task = request.get_json().get("id_task", "")
     finished = request.get_json().get("finished", "")
     task = Task.query.filter_by(id_task=id_task).first()

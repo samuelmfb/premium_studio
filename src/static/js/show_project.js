@@ -3,9 +3,13 @@ const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas
 btOcultarConcluidas.addEventListener("click", function(){
     if (btOcultarConcluidas.checked == true) {
         document.querySelectorAll(".task-row").forEach(item => {
-            checked = item.querySelector('input').hasAttribute('checked');
-            if (checked) {
-                item.setAttribute("style", "display:none !important;")
+            if (document.querySelectorAll(".task-row").length != 0) { 
+                checked = item.querySelector('input').hasAttribute('checked');
+                if (checked) {
+                    item.setAttribute("style", "display:none !important;")
+                }
+            } else {
+                alert("Sem tarefas concluídas.");
             }
         });
 
