@@ -17,6 +17,7 @@ def init_db():
         ("Funcionário"),
         ("Produtor"),
         ("Cliente"),
+        ("Sem Perfil")
     ]
 
     customers  = [

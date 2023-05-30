@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request, jsonify
 import validators
-from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
+from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
 from src.database import db
 from src.models.user import User
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -14,7 +14,6 @@ def handle_user():
     current_user = get_jwt_identity()
     if request.method == "POST":
         id_user = request.get_json().get("id_user", "")
-        id_user_role = request.get_json().get("id_user_role", "")
         user_name = request.get_json().get("user_name", "")
         email = request.get_json().get("email", "")
         password = request.get_json().get("password", "")
@@ -26,7 +25,6 @@ def handle_user():
 
         user = User(
             id_user = id_user,
-            id_user_role = id_user_role,
             user_name = user_name,
             email = email,
             password = password
@@ -102,17 +100,17 @@ def get_user(id):
 def edit_user(id):
     id_user_update = get_jwt_identity()
     user_update = User.query.filter_by(id_user = id_user_update).first()
-    
+
     if user_update.user_role.user_role != "Gerente":
         return jsonify({
-            "message": "Usuário não possui permissão para alterar privilégios de acesso."
-        })
+            "msg": "Usuário não possui permissão para alterar privilégios de acesso."
+        }), HTTP_403_FORBIDDEN
     
     user = User.query.filter_by(id_user=id).first()
     if not user:
         return jsonify({
-            "message": "Item não encontrado."
-        })
+            "msg": "Item não encontrado."
+        }), HTTP_404_NOT_FOUND
     
     id_user = id
     id_user_role = request.get_json().get("id_user_role", "")

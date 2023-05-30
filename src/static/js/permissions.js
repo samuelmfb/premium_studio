@@ -130,12 +130,6 @@ function check_option(item) {
         .parentNode
         .id;
     option = item.value;
-    if (option == 3){
-        // create new producer
-        create_producer(id);
-    } else {
-        delete_producer(id);
-    }
     //change user role
     change_role(id, option);
 }
@@ -212,6 +206,12 @@ function change_role(id_user, id_user_role) {
    })
     .done(function(response, msg){
         console.log(response,msg);
+        if (option == 3){
+            // create new producer
+            create_producer(id);
+        } else {
+            delete_producer(id);
+        }
         alert('Registro atualizado com sucesso!');
         //location.reload();
    })
@@ -221,6 +221,8 @@ function change_role(id_user, id_user_role) {
             if (msg == 'Token has expired') {
                 alert('Token expirou. Redirecionando para a tela de login.');
                 window.location.replace("/login");
+            } else {
+                alert(msg)
             };
         } 
         if ('error'in response['responseJSON']){
