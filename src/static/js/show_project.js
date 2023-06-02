@@ -2,17 +2,19 @@
 const btOcultarConcluidas = document.getElementById("flexSwitchOcultarConcluidas");
 btOcultarConcluidas.addEventListener("click", function(){
     if (btOcultarConcluidas.checked == true) {
+        let sem_tarefas_concluidas = true;
         document.querySelectorAll(".task-row").forEach(item => {
-            console.log(document.querySelectorAll(".task-row").length)
-            if (document.querySelectorAll(".task-row").length != 0) { 
-                checked = item.querySelector('input').hasAttribute('checked');
-                if (checked) {
-                    item.setAttribute("style", "display:none !important;")
-                }
-            } else {
-                alert("Sem tarefas concluídas.");
+            checked = item.querySelector('input').hasAttribute('checked');
+            if (checked) {
+                item.setAttribute("style", "display:none !important;")
+                sem_tarefas_concluidas = false;
             }
         });
+        if (sem_tarefas_concluidas){
+            btOcultarConcluidas.checked = false;
+            alert("Sem tarefas concluídas.");
+            
+        }
 
     } else {
         document.querySelectorAll(".task-row").forEach(item => {
@@ -51,18 +53,8 @@ document.querySelectorAll(".flexCheckDefault").forEach(item =>{
         input = row.querySelector('input');
         
         finished = item.checked;
-        toggle_task(id, finished);
-        if (finished == true){
-            // elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
-            text.classList.toggle('checked');
-            input.setAttribute('checked', '');
-            // alert(`Tarefa concluída.`);
-        } else {
-            // elementoTarefa.setAttribute("class", "form-check-label ml-3");
-            text.classList.toggle('checked');
-            input.removeAttribute('checked');
-            // alert(`Tarefa restaurada.`);
-        }
+        toggle_task(id, finished, text, input);
+        
     })
 });
 
@@ -136,7 +128,7 @@ function add_task(id) {
     window.location.replace(`/tarefa/${id}`);
 }
 
-function toggle_task(id, finished) {
+function toggle_task(id, finished, text, input) {
 
     data = {
         'id_task': id,
@@ -151,6 +143,17 @@ function toggle_task(id, finished) {
    })
     .done(function(response, msg, data){
         console.log("ajax",response,msg);
+        if (finished == true){
+            // elementoTarefa.setAttribute("class", "form-check-label ml-3 task-complete");
+            text.classList.toggle('checked');
+            input.setAttribute('checked', '');
+            // alert(`Tarefa concluída.`);
+        } else {
+            // elementoTarefa.setAttribute("class", "form-check-label ml-3");
+            text.classList.toggle('checked');
+            input.removeAttribute('checked');
+            // alert(`Tarefa restaurada.`);
+        }
    })
    .fail(function(response, textStatus, msg){
         if ('msg'in response['responseJSON']){
@@ -164,6 +167,7 @@ function toggle_task(id, finished) {
             const error = response['responseJSON']['error'];
             if (error) {
                 alert(error);
+                window.location.reload();
             };
         }
     });

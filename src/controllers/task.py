@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request, jsonify
 import validators
-from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK
+from src.constants.http_status_codes import HTTP_204_NO_CONTENT,HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN
 from src.database import db
 from src.models.task import Task
 from src.models.user import User
@@ -185,8 +185,8 @@ def toggle_task():
     user = User.query.filter_by(id_user = id_user).first()
     if user.user_role.user_role not in ("Gerente", "Produtor"):
         return jsonify({
-            "message": "Usuário não possui privilégio de acesso para concluir tarefas."
-        })
+            "error": "Usuário não possui privilégio de acesso para concluir tarefas."
+        }), HTTP_403_FORBIDDEN
     
     id_task = request.get_json().get("id_task", "")
     finished = request.get_json().get("finished", "")
